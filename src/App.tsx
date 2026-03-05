@@ -410,7 +410,7 @@ export default function App() {
             viewport={{ once: true }}
             className="space-y-10"
           >
-            <h2 className="text-4xl md:text-6xl leading-tight font-decorative">Welcome to the <br/><span className="text-white">Heartbeat</span></h2>
+            <h2 className="text-4xl md:text-6xl leading-tight font-decorative">Welcome to the <br/><span className="text-white">BlushfulGifts</span></h2>
             <p className="text-white/50 text-lg font-light leading-relaxed max-w-lg">
               Step into a world of enchantment and magic, where your most <span className="text-gold">Treasured</span> memories are kept <span className="text-gold">Snug</span> and safe. At BlushfulGifts, we create <span className="text-gold">Heartfelt</span> treasures with <span className="text-gold">Express</span> speed, ensuring your love story <span className="text-gold">Twinkles</span> <span className="text-gold">Forever</span>. ✨
             </p>
@@ -502,10 +502,10 @@ export default function App() {
         </div>
       </section>
 
-      {/* Heartfelt Policies Section */}
+      {/* Blushful Policies Section */}
       <section className="py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
         <div className="text-center mb-24">
-          <h2 className="text-4xl md:text-6xl font-decorative">Heartfelt Policies 🌸</h2>
+          <h2 className="text-4xl md:text-6xl font-decorative">Blushful Policies 🌸</h2>
           <p className="text-white/40 uppercase tracking-widest text-xs mt-4">Transparent & Adorable</p>
         </div>
         
