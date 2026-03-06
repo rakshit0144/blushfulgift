@@ -1,4 +1,4 @@
-import { ShoppingBag, Heart, Menu, X, Instagram, MessageCircle, Star, ShieldCheck, Truck, Package, Droplets, Clock } from 'lucide-react';
+import { ShoppingBag, Heart, Menu, X, Instagram, MessageCircle, Star, ShieldCheck, Truck, Package, Droplets, Clock, ChevronUp, Upload } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import React, { useState, useEffect } from 'react';
 
@@ -88,6 +88,7 @@ const PRODUCTS: Product[] = [
 
 const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -95,54 +96,137 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navLinks = [
+    { name: 'Home', href: '#home' },
+    { name: 'Collections', href: '#shop' },
+    { name: 'About', href: '#about' },
+    { name: 'Contact', href: '#contact' },
+  ];
+
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-dark-bg/90 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-transparent py-4 md:py-8'}`}>
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Top Row: Search, Logo, Icons */}
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex-1 hidden md:block">
-            <button className="text-white/60 hover:text-gold transition-colors">
-              <Menu size={20} />
-            </button>
-          </div>
-          
-          <div className="flex-1 text-center">
-            <h1 className="text-2xl md:text-5xl font-decorative tracking-widest text-white text-glow">
-              BlushfulGifts
-            </h1>
-          </div>
-
-          <div className="flex-1 flex justify-end items-center gap-6">
-            <div className="hidden md:flex gap-4 text-white/40">
-              <Instagram size={18} className="hover:text-gold cursor-pointer transition-colors" />
-              <MessageCircle size={18} className="hover:text-gold cursor-pointer transition-colors" />
+    <>
+      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-dark-bg/90 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-transparent py-4 md:py-8'}`}>
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Top Row: Search, Logo, Icons */}
+          <div className="flex justify-between items-center mb-0 md:mb-6">
+            <div className="flex-1 md:hidden">
+              <button 
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="text-white/60 hover:text-gold transition-colors"
+              >
+                <Menu size={24} />
+              </button>
             </div>
-            <button onClick={onOpenCart} className="relative hover:text-gold transition-colors">
-              <ShoppingBag size={22} />
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-gold text-dark-bg text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                  {cartCount}
-                </span>
-              )}
-            </button>
-          </div>
-        </div>
 
-        {/* Bottom Row: Navigation */}
-        <nav className="hidden md:flex justify-center gap-12 text-[11px] uppercase tracking-[0.3em] font-medium text-white/70">
-          <a href="#home" className="hover:text-gold transition-colors">Home</a>
-          <a href="#shop" className="hover:text-gold transition-colors">New In</a>
-          <a href="#shop" className="hover:text-gold transition-colors">Shop</a>
-          <a href="#about" className="hover:text-gold transition-colors">About</a>
-          <a href="#contact" className="hover:text-gold transition-colors">Contact</a>
-        </nav>
-      </div>
-    </header>
+            <div className="flex-1 hidden md:block">
+              <button className="text-white/60 hover:text-gold transition-colors">
+                <Menu size={20} />
+              </button>
+            </div>
+            
+            <div className="flex-1 text-center">
+              <h1 className="text-2xl md:text-5xl font-decorative tracking-wider md:tracking-widest text-white text-glow whitespace-nowrap">
+                BlushfulGifts
+              </h1>
+            </div>
+
+            <div className="flex-1 flex justify-end items-center gap-4 md:gap-6">
+              <div className="hidden md:flex gap-4 text-white/40">
+                <Instagram size={18} className="hover:text-gold cursor-pointer transition-colors" />
+                <MessageCircle size={18} className="hover:text-gold cursor-pointer transition-colors" />
+              </div>
+              <button onClick={onOpenCart} className="relative hover:text-gold transition-colors">
+                <ShoppingBag size={22} />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-gold text-dark-bg text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Bottom Row: Navigation */}
+          <nav className="hidden md:flex justify-center gap-12 text-[11px] uppercase tracking-[0.3em] font-medium text-white/70">
+            {navLinks.map(link => (
+              <a key={link.name} href={link.href} className="hover:text-gold transition-colors">{link.name}</a>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/90 backdrop-blur-lg z-[100]"
+            />
+            <motion.div 
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed left-0 top-0 h-full w-[80%] max-w-xs bg-dark-surface z-[101] p-8 flex flex-col"
+            >
+              <div className="flex justify-between items-center mb-12">
+                <span className="text-xl font-decorative tracking-widest text-gold">Blushful</span>
+                <button onClick={() => setIsMobileMenuOpen(false)} className="text-white/40"><X size={24} /></button>
+              </div>
+              
+              <nav className="flex flex-col gap-8">
+                {navLinks.map((link, i) => (
+                  <motion.a 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    key={link.name} 
+                    href={link.href} 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-2xl font-serif text-white/80 hover:text-gold transition-colors"
+                  >
+                    {link.name}
+                  </motion.a>
+                ))}
+              </nav>
+
+              <div className="mt-auto pt-12 border-t border-white/5 space-y-6">
+                <div className="flex gap-6 text-white/40">
+                  <Instagram size={24} />
+                  <MessageCircle size={24} />
+                </div>
+                <p className="text-[10px] uppercase tracking-widest text-white/20">
+                  Handcrafted with Magic ✨
+                </p>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
-const ProductCard: React.FC<{ product: Product; onAddToCart: (item: CartItem) => void }> = ({ product, onAddToCart }) => {
+const ProductCard: React.FC<{ 
+  product: Product; 
+  onAddToCart: (item: CartItem) => void;
+  onBuyNow: (item: CartItem) => void;
+}> = ({ product, onAddToCart, onBuyNow }) => {
   const [selectedOption, setSelectedOption] = useState(product.options[0]);
+
+  const item = {
+    id: `${product.id}-${selectedOption.label}`,
+    productId: product.id,
+    name: product.name,
+    optionLabel: selectedOption.label,
+    price: selectedOption.price,
+    quantity: 1,
+    image: product.image
+  };
 
   return (
     <motion.div 
@@ -151,30 +235,28 @@ const ProductCard: React.FC<{ product: Product; onAddToCart: (item: CartItem) =>
       viewport={{ once: true }}
       className="group text-center"
     >
-      <div className="relative aspect-[3/4] mb-6 overflow-hidden rounded-sm border border-white/5 group-hover:border-gold/30 transition-all duration-700">
+      <div className="relative aspect-[3/4] mb-6 overflow-hidden rounded-sm border border-white/5 group-hover:border-gold/30 transition-all duration-700 shadow-lg">
         <img 
           src={product.image} 
           alt={product.name} 
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-500" />
         
         {/* Quick Add Overlay */}
-        <div className="absolute bottom-0 left-0 w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+        <div className="absolute bottom-0 left-0 w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 flex flex-col gap-2">
           <button 
-            onClick={() => onAddToCart({
-              id: `${product.id}-${selectedOption.label}`,
-              productId: product.id,
-              name: product.name,
-              optionLabel: selectedOption.label,
-              price: selectedOption.price,
-              quantity: 1,
-              image: product.image
-            })}
-            className="w-full bg-white/10 backdrop-blur-md border border-white/20 text-white py-3 text-xs uppercase tracking-widest hover:bg-gold hover:text-dark-bg transition-all"
+            onClick={() => onAddToCart(item)}
+            className="w-full bg-white/10 backdrop-blur-md border border-white/20 text-white py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-dark-bg transition-all"
           >
-            Quick Add
+            Add to Cart
+          </button>
+          <button 
+            onClick={() => onBuyNow(item)}
+            className="w-full bg-gold text-dark-bg py-3 text-[10px] uppercase tracking-widest font-bold hover:bg-gold-light transition-all"
+          >
+            Buy Now
           </button>
         </div>
       </div>
@@ -182,33 +264,280 @@ const ProductCard: React.FC<{ product: Product; onAddToCart: (item: CartItem) =>
       <div className="space-y-2">
         <h3 className="text-lg font-serif tracking-wide text-white/90">{product.name}</h3>
         <div className="flex flex-col items-center gap-2">
-          <select 
-            value={selectedOption.label}
-            onChange={(e) => {
-              const opt = product.options.find(o => o.label === e.target.value);
-              if (opt) setSelectedOption(opt);
-            }}
-            className="bg-transparent text-[10px] uppercase tracking-widest text-white/40 border-none focus:ring-0 cursor-pointer hover:text-gold"
-          >
-            {product.options.map((opt) => (
-              <option key={opt.label} value={opt.label} className="bg-dark-surface">
-                {opt.label}
-              </option>
-            ))}
-          </select>
-          <div className="text-gold font-serif text-lg">₹{selectedOption.price.toLocaleString()}</div>
+          <div className="relative">
+            <select 
+              value={selectedOption.label}
+              onChange={(e) => {
+                const opt = product.options.find(o => o.label === e.target.value);
+                if (opt) setSelectedOption(opt);
+              }}
+              className="appearance-none bg-white/5 rounded-full px-6 py-1 text-[10px] uppercase tracking-widest text-white/60 border border-white/10 focus:ring-0 cursor-pointer hover:border-gold transition-colors pr-10"
+            >
+              {product.options.map((opt) => (
+                <option key={opt.label} value={opt.label} className="bg-dark-surface">
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/40">
+              <Clock size={10} />
+            </div>
+          </div>
+          <div className="text-gold font-serif text-xl">₹{selectedOption.price.toLocaleString()}</div>
+          <div className="flex flex-col w-full gap-2 mt-2">
+            <button 
+              onClick={() => onAddToCart(item)}
+              className="w-full px-6 py-2.5 border border-gold/30 text-gold text-[10px] uppercase tracking-[0.2em] hover:bg-gold hover:text-dark-bg transition-all duration-500 rounded-full font-medium"
+            >
+              Add to Cart
+            </button>
+            <button 
+              onClick={() => onBuyNow(item)}
+              className="w-full md:hidden px-6 py-2.5 bg-gold text-dark-bg text-[10px] uppercase tracking-[0.2em] hover:bg-gold-light transition-all duration-500 rounded-full font-bold"
+            >
+              Buy Now
+            </button>
+          </div>
         </div>
       </div>
     </motion.div>
   );
 };
 
-const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove }: { 
+const CheckoutModal = ({ isOpen, onClose, items, total }: { 
+  isOpen: boolean, 
+  onClose: () => void, 
+  items: CartItem[],
+  total: number
+}) => {
+  const [step, setStep] = useState<'details' | 'success'>('details');
+  const [referenceImage, setReferenceImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    pincode: ''
+  });
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setReferenceImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Format WhatsApp message
+    const orderDetails = items.map(item => `- ${item.name} (${item.optionLabel}) x ${item.quantity}: ₹${(item.price * item.quantity).toLocaleString()}`).join('\n');
+    const message = `*New Order from BlushfulGifts*\n\n` +
+      `*Customer Details:*\n` +
+      `Name: ${formData.name}\n` +
+      `Email: ${formData.email}\n` +
+      `Phone: ${formData.phone}\n` +
+      `Address: ${formData.address}, ${formData.city} - ${formData.pincode}\n\n` +
+      `*Order Summary:*\n${orderDetails}\n\n` +
+      `*Total Amount:* ₹${total.toLocaleString()}\n\n` +
+      (referenceImage ? `*Note:* I have a reference image to share for this order. 📸\n\n` : '') +
+      `Please confirm the order and share payment details. ✨`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/917088159329?text=${encodedMessage}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+    
+    setStep('success');
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <AnimatePresence>
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+          className="absolute inset-0 bg-black/80 backdrop-blur-md"
+        />
+        <motion.div 
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+          className="relative bg-dark-surface border border-white/10 w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl"
+        >
+          {step === 'details' ? (
+            <div className="grid md:grid-cols-2 max-h-[90vh] overflow-y-auto md:max-h-none">
+              <div className="p-6 md:p-8 border-b md:border-b-0 md:border-r border-white/5 bg-white/[0.02]">
+                <h2 className="text-xl md:text-2xl font-serif mb-6 text-gold">
+                  Order Summary
+                </h2>
+                <div className="space-y-4 max-h-[200px] md:max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                  {items.map((item) => (
+                    <div key={item.id} className="flex gap-4 items-center">
+                      <img src={item.image} alt={item.name} className="w-10 h-10 md:w-12 md:h-12 rounded-lg object-cover" />
+                      <div className="flex-1">
+                        <h4 className="text-xs md:text-sm font-medium">{item.name}</h4>
+                        <p className="text-[9px] md:text-[10px] text-white/40">{item.optionLabel} x {item.quantity}</p>
+                      </div>
+                      <div className="text-xs md:text-sm">₹{(item.price * item.quantity).toLocaleString()}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 md:mt-8 pt-6 border-t border-white/10">
+                  <div className="flex justify-between text-lg md:text-xl font-serif">
+                    <span>Total</span>
+                    <span className="text-gold">₹{total.toLocaleString()}</span>
+                  </div>
+                  <p className="text-[9px] md:text-[10px] text-white/30 mt-2 italic">* 60% advance required to lock schedule as per Blushful Policies.</p>
+                </div>
+              </div>
+              
+              <div className="p-6 md:p-8">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-xl md:text-2xl font-serif">Shipping Details</h2>
+                  <button onClick={onClose} className="text-white/40 hover:text-white"><X size={20} /></button>
+                </div>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <input 
+                    required
+                    type="text" 
+                    placeholder="Full Name" 
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors"
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input 
+                      required
+                      type="email" 
+                      placeholder="Email" 
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors"
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    />
+                    <input 
+                      required
+                      type="tel" 
+                      placeholder="Phone" 
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                    />
+                  </div>
+                  <textarea 
+                    required
+                    placeholder="Full Address" 
+                    rows={3}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors resize-none"
+                    value={formData.address}
+                    onChange={(e) => setFormData({...formData, address: e.target.value})}
+                  />
+                  <div className="grid grid-cols-2 gap-4">
+                    <input 
+                      required
+                      type="text" 
+                      placeholder="City" 
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors"
+                      value={formData.city}
+                      onChange={(e) => setFormData({...formData, city: e.target.value})}
+                    />
+                    <input 
+                      required
+                      type="text" 
+                      placeholder="Pincode" 
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors"
+                      value={formData.pincode}
+                      onChange={(e) => setFormData({...formData, pincode: e.target.value})}
+                    />
+                  </div>
+
+                  {/* Reference Image Upload */}
+                  <div className="space-y-2">
+                    <label className="block text-[10px] uppercase tracking-widest text-white/40 ml-1">Reference Image (Optional)</label>
+                    <div className="relative group">
+                      <input 
+                        type="file" 
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                      />
+                      <div className="w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-4 flex items-center justify-center gap-3 group-hover:border-gold/50 transition-colors">
+                        {imagePreview ? (
+                          <div className="flex items-center gap-3 w-full">
+                            <img src={imagePreview} alt="Preview" className="w-10 h-10 rounded object-cover border border-white/10" />
+                            <span className="text-xs text-white/60 truncate flex-1">{referenceImage?.name}</span>
+                            <button 
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setReferenceImage(null);
+                                setImagePreview(null);
+                              }}
+                              className="text-white/40 hover:text-red-400 z-20"
+                            >
+                              <X size={16} />
+                            </button>
+                          </div>
+                        ) : (
+                          <>
+                            <Upload size={18} className="text-white/40 group-hover:text-gold transition-colors" />
+                            <span className="text-xs text-white/40 group-hover:text-white/60 transition-colors">Upload reference image</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <button type="submit" className="w-full bg-gold text-dark-bg py-4 rounded-xl font-bold hover:bg-gold-light transition-all duration-300 uppercase tracking-widest text-sm mt-4">
+                    Confirm Order via WhatsApp
+                  </button>
+                </form>
+              </div>
+            </div>
+          ) : (
+            <div className="p-8 md:p-16 text-center space-y-6">
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-gold/20 rounded-full flex items-center justify-center mx-auto">
+                <Heart className="text-gold" size={32} md:size={40} fill="currentColor" />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif">Order Received!</h2>
+              <p className="text-white/60 text-sm md:text-base max-w-md mx-auto leading-relaxed">
+                Thank you for trusting BlushfulGifts with your treasured memories. Your order details have been transferred to our artisan at <span className="text-white">+91 7088159329</span>. 
+                {referenceImage && <span className="block mt-2 text-gold font-medium italic">Don't forget to attach your reference image in the WhatsApp chat! 📸</span>}
+                We will contact you shortly for the next steps! ✨
+              </p>
+              <button 
+                onClick={onClose}
+                className="bg-gold text-dark-bg px-8 md:px-12 py-3 md:py-4 rounded-full font-bold hover:bg-gold-light transition-all uppercase tracking-widest text-xs md:text-sm"
+              >
+                Continue Shopping
+              </button>
+            </div>
+          )}
+        </motion.div>
+      </div>
+    </AnimatePresence>
+  );
+};
+
+const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onCheckout }: { 
   isOpen: boolean, 
   onClose: () => void, 
   items: CartItem[],
   onUpdateQuantity: (id: string, delta: number) => void,
-  onRemove: (id: string) => void
+  onRemove: (id: string) => void,
+  onCheckout: () => void
 }) => {
   const total = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
@@ -234,7 +563,7 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove }: {
               <button onClick={onClose} className="hover:text-gold transition-colors"><X /></button>
             </div>
             
-            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
               {items.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-white/40 space-y-4">
                   <ShoppingBag size={48} />
@@ -244,22 +573,22 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove }: {
               ) : (
                 items.map((item) => (
                   <div key={item.id} className="flex gap-4">
-                    <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden flex-shrink-0">
                       <img src={item.image} alt={item.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                     </div>
                     <div className="flex-1">
                       <h4 className="text-sm font-medium">{item.name}</h4>
-                      <p className="text-xs text-white/40 mb-2">{item.optionLabel}</p>
+                      <p className="text-[10px] md:text-xs text-white/40 mb-2">{item.optionLabel}</p>
                       <div className="flex justify-between items-center">
                         <div className="flex items-center border border-white/10 rounded-md">
-                          <button onClick={() => onUpdateQuantity(item.id, -1)} className="px-2 py-1 hover:text-gold">-</button>
+                          <button onClick={() => onUpdateQuantity(item.id, -1)} className="px-3 py-1.5 hover:text-gold">-</button>
                           <span className="px-2 text-sm">{item.quantity}</span>
-                          <button onClick={() => onUpdateQuantity(item.id, 1)} className="px-2 py-1 hover:text-gold">+</button>
+                          <button onClick={() => onUpdateQuantity(item.id, 1)} className="px-3 py-1.5 hover:text-gold">+</button>
                         </div>
-                        <div className="text-gold">₹{(item.price * item.quantity).toLocaleString()}</div>
+                        <div className="text-gold text-sm md:text-base">₹{(item.price * item.quantity).toLocaleString()}</div>
                       </div>
                     </div>
-                    <button onClick={() => onRemove(item.id)} className="text-white/20 hover:text-red-500"><X size={16} /></button>
+                    <button onClick={() => onRemove(item.id)} className="text-white/20 hover:text-red-500 p-1"><X size={16} /></button>
                   </div>
                 ))
               )}
@@ -271,9 +600,12 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove }: {
                   <span>Total</span>
                   <span className="text-gold">₹{total.toLocaleString()}</span>
                 </div>
-                  <button className="w-full bg-gold text-dark-bg py-4 rounded-xl font-bold hover:bg-gold-light transition-colors uppercase tracking-widest block">
-                    Secure Checkout
-                  </button>
+                <button 
+                  onClick={onCheckout}
+                  className="w-full bg-gold text-dark-bg py-4 rounded-xl font-bold hover:bg-gold-light transition-colors uppercase tracking-widest block"
+                >
+                  Secure Checkout
+                </button>
                 <div className="flex justify-center gap-4 opacity-40">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Razorpay_logo.svg" alt="Razorpay" className="h-4 invert" />
                   <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo.png" alt="UPI" className="h-4 invert" />
@@ -290,6 +622,17 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove }: {
 export default function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [checkoutItems, setCheckoutItems] = useState<CartItem[]>([]);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setShowBackToTop(window.scrollY > 500);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   const addToCart = (item: CartItem) => {
     setCartItems(prev => {
@@ -300,6 +643,17 @@ export default function App() {
       return [...prev, item];
     });
     setIsCartOpen(true);
+  };
+
+  const buyNow = (item: CartItem) => {
+    setCheckoutItems([item]);
+    setIsCheckoutOpen(true);
+  };
+
+  const handleCartCheckout = () => {
+    setCheckoutItems(cartItems);
+    setIsCartOpen(false);
+    setIsCheckoutOpen(true);
   };
 
   const updateQuantity = (id: string, delta: number) => {
@@ -317,9 +671,17 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen selection:bg-gold selection:text-dark-bg">
+    <div className="min-h-screen selection:bg-gold selection:text-dark-bg relative">
+      {/* Fairy Bokeh Elements */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="bokeh w-64 h-64 bg-fairy-purple/20 top-1/4 -left-32" />
+        <div className="bokeh w-96 h-96 bg-fairy-pink/10 bottom-1/4 -right-48" style={{ animationDelay: '-2s' }} />
+        <div className="bokeh w-48 h-48 bg-gold/10 top-3/4 left-1/2" style={{ animationDelay: '-5s' }} />
+        <div className="absolute inset-0 fairy-dust" />
+      </div>
+
       {/* Announcement Bar */}
-      <div className="bg-dark-bg text-white/60 py-2 text-center text-[9px] uppercase tracking-[0.4em] z-[60] relative border-b border-white/5">
+      <div className="bg-dark-bg text-white/60 py-2 text-center text-[10px] md:text-[9px] uppercase tracking-[0.2em] md:tracking-[0.4em] z-[60] relative border-b border-white/5">
         <span className="inline-flex items-center gap-2">
           <ShieldCheck size={10} className="text-gold" />
           Free Shipping for Orders Over ₹5000
@@ -341,81 +703,101 @@ export default function App() {
           <div className="absolute inset-0 bg-gradient-to-b from-dark-bg/40 via-transparent to-dark-bg" />
         </div>
         
-        <div className="relative z-10 text-center px-6 max-w-5xl pt-32 md:pt-20">
+        <div className="relative z-10 text-center px-6 max-w-5xl pt-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5 }}
           >
-            <h1 className="text-5xl md:text-9xl mb-8 leading-tight text-white text-glow font-decorative">
+            <h1 className="text-5xl md:text-9xl mb-4 md:mb-8 leading-tight text-white text-glow font-decorative drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
               Memories <br/> <span className="md:ml-24">Magic</span>
             </h1>
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1, duration: 1 }}
-              className="flex flex-col md:flex-row gap-6 justify-center items-center"
+              className="flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-center"
             >
               <div className="w-12 h-px bg-gold/50 hidden md:block" />
-              <p className="text-white/60 text-sm uppercase tracking-[0.5em] font-light">
+              <p className="text-white/80 text-[10px] md:text-sm uppercase tracking-[0.3em] md:tracking-[0.5em] font-light text-glow px-4 md:px-0">
                 Building the Heartbeat of Gifting, from the Heart. 🌸
               </p>
               <div className="w-12 h-px bg-gold/50 hidden md:block" />
             </motion.div>
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.5, duration: 1 }}
-              className="flex flex-col md:flex-row gap-4 justify-center mt-12"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 2, duration: 1 }}
+              className="mt-12 md:mt-20 flex flex-col items-center gap-4"
             >
-              <a href="#shop" className="bg-gold text-dark-bg px-10 py-4 rounded-full font-bold hover:bg-gold-light transition-all duration-300 uppercase tracking-widest text-sm glow-gold block">
-                Shop Now
-              </a>
-              <button className="border border-white/20 hover:border-gold hover:text-gold px-10 py-4 rounded-full font-bold transition-all duration-300 uppercase tracking-widest text-sm backdrop-blur-sm w-full">
-                Custom Order
-              </button>
+              <span className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] text-white/40 font-light">Scroll to Explore</span>
+              <motion.div
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="w-5 h-9 border border-white/20 rounded-full flex justify-center p-1.5"
+              >
+                <motion.div 
+                  animate={{ y: [0, 15, 0], opacity: [1, 0, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  className="w-1 h-1.5 bg-gold/80 rounded-full" 
+                />
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>
 
-        <motion.div 
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 3, repeat: Infinity }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white/20"
-        >
-          <div className="w-px h-16 bg-gradient-to-b from-gold/50 to-transparent mx-auto" />
-        </motion.div>
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-dark-bg to-transparent pointer-events-none" />
+        
+        {/* Scrolling Text Marquee */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden py-8 border-t border-white/5 bg-dark-bg/50 backdrop-blur-sm">
+          <motion.div 
+            animate={{ x: [0, -1000] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="flex whitespace-nowrap gap-20 items-center"
+          >
+            {[...Array(10)].map((_, i) => (
+              <span key={i} className="text-[10px] uppercase tracking-[1em] text-white/20 font-light flex items-center gap-20">
+                BlushfulGifts <Star size={8} className="text-gold/30" /> Magical Memories <Star size={8} className="text-gold/30" /> Handcrafted with Love
+              </span>
+            ))}
+          </motion.div>
+        </div>
       </section>
 
       {/* Latest Arrivals Section */}
-      <section id="shop" className="py-32 px-6 max-w-7xl mx-auto">
-        <div className="text-center mb-24">
-          <h2 className="text-4xl md:text-6xl mb-6 font-decorative tracking-wide">Our Latest Arrivals</h2>
-          <div className="w-24 h-px bg-gold/30 mx-auto" />
+      <section id="shop" className="py-16 md:py-32 px-6 max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-12 md:mb-24">
+          <h2 className="text-3xl md:text-6xl mb-4 md:mb-6 font-decorative tracking-wide text-glow">Our Latest Arrivals</h2>
+          <div className="w-16 md:w-24 h-px bg-gold/30 mx-auto glow-gold" />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {PRODUCTS.map((product) => (
-            <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
+            <ProductCard 
+              key={product.id} 
+              product={product} 
+              onAddToCart={addToCart} 
+              onBuyNow={buyNow}
+            />
           ))}
         </div>
       </section>
 
       {/* Welcome Section (Split Layout) */}
-      <section className="py-32 relative overflow-hidden bg-dark-bg">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-24 items-center">
+      <section className="py-16 md:py-32 relative overflow-hidden bg-dark-bg z-10">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 md:gap-24 items-center">
           <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="space-y-10"
+            className="space-y-6 md:space-y-10 text-center md:text-left"
           >
-            <h2 className="text-4xl md:text-6xl leading-tight font-decorative">Welcome to the <br/><span className="text-white">BlushfulGifts</span></h2>
-            <p className="text-white/50 text-lg font-light leading-relaxed max-w-lg">
+            <h2 className="text-3xl md:text-6xl leading-tight font-decorative">Welcome to the <br/><span className="text-white">BlushfulGifts</span></h2>
+            <p className="text-white/50 text-base md:text-lg font-light leading-relaxed max-w-lg mx-auto md:mx-0">
               Step into a world of enchantment and magic, where your most <span className="text-gold">Treasured</span> memories are kept <span className="text-gold">Snug</span> and safe. At BlushfulGifts, we create <span className="text-gold">Heartfelt</span> treasures with <span className="text-gold">Express</span> speed, ensuring your love story <span className="text-gold">Twinkles</span> <span className="text-gold">Forever</span>. ✨
             </p>
-            <button className="group relative px-10 py-4 overflow-hidden border border-white/20 transition-all hover:border-gold">
-              <span className="relative z-10 text-xs uppercase tracking-[0.3em] group-hover:text-dark-bg transition-colors">More About Us</span>
+            <button className="group relative px-8 md:px-10 py-3 md:py-4 overflow-hidden border border-white/20 transition-all hover:border-gold">
+              <span className="relative z-10 text-[10px] md:text-xs uppercase tracking-[0.3em] group-hover:text-dark-bg transition-colors">More About Us</span>
               <div className="absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
             </button>
           </motion.div>
@@ -442,12 +824,12 @@ export default function App() {
       </section>
 
       {/* Browse by Collections */}
-      <section className="py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
-        <div className="text-center mb-24">
-          <h2 className="text-4xl md:text-6xl font-decorative">Browse by Collections</h2>
+      <section className="py-16 md:py-32 px-6 max-w-7xl mx-auto border-t border-white/5 relative z-10">
+        <div className="text-center mb-12 md:mb-24">
+          <h2 className="text-3xl md:text-6xl font-decorative">Browse by Collections</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           {['Wooden Frames', 'Mould-Based', 'LED Blocks'].map((cat, i) => (
             <motion.div 
               key={cat}
@@ -473,10 +855,10 @@ export default function App() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-32 bg-dark-bg relative overflow-hidden">
+      <section className="py-16 md:py-32 bg-dark-bg relative overflow-hidden">
         <div className="absolute inset-0 nebula-bg opacity-50" />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-12">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12">
             {[
               { icon: <Droplets className="text-gold" />, title: "Eternity-Grade Resin" },
               { icon: <Clock className="text-gold" />, title: "Express Magic Speed" },
@@ -503,13 +885,13 @@ export default function App() {
       </section>
 
       {/* Blushful Policies Section */}
-      <section className="py-32 px-6 max-w-7xl mx-auto border-t border-white/5">
-        <div className="text-center mb-24">
-          <h2 className="text-4xl md:text-6xl font-decorative">Blushful Policies 🌸</h2>
-          <p className="text-white/40 uppercase tracking-widest text-xs mt-4">Transparent & Adorable</p>
+      <section className="py-16 md:py-32 px-6 max-w-7xl mx-auto border-t border-white/5 relative z-10">
+        <div className="text-center mb-12 md:mb-24">
+          <h2 className="text-3xl md:text-6xl font-decorative">Blushful Policies 🌸</h2>
+          <p className="text-white/40 uppercase tracking-widest text-[10px] md:text-xs mt-4">Transparent & Adorable</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
           {[
             { q: "Can I get a discount?", a: "To keep our 'Gifting in Minutes' speed and use our premium Eternity-Grade resin, our prices are fixed. However, I’d love to tuck in a surprise Tiny Treasure keychain just for you! ✨" },
             { q: "What is the booking process?", a: "Our system automatically triggers your professional pickup and locks in your artisan’s schedule the moment the 60% booking fee is received! ⏳" },
@@ -527,15 +909,15 @@ export default function App() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-32 px-6 max-w-7xl mx-auto">
-        <div className="text-center mb-24">
-          <h2 className="text-4xl md:text-6xl mb-6 font-decorative">Client Stories</h2>
+      <section className="py-16 md:py-32 px-6 max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-12 md:mb-24">
+          <h2 className="text-3xl md:text-6xl mb-4 md:mb-6 font-decorative">Client Stories</h2>
           <div className="flex justify-center gap-2 text-gold/40">
-            {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="currentColor" />)}
+            {[...Array(5)].map((_, i) => <Star key={i} size={12} md:size={14} fill="currentColor" />)}
           </div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {[
             { name: "Ananya Sharma", text: "The preservation is absolutely magical. It brings back all the emotions of my wedding day every time I look at it." },
             { name: "Rahul Verma", text: "Exceptional quality and very professional service. The LED block is a stunning addition to our home decor." },
@@ -556,32 +938,31 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-dark-bg border-t border-white/5 pt-32 pb-16 px-6 relative overflow-hidden">
+      <footer className="bg-dark-bg border-t border-white/5 pt-16 md:pt-32 pb-16 px-6 relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-full h-1/2 nebula-bg opacity-30" />
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-20 mb-32 relative z-10">
-          <div className="space-y-8">
-            <div className="text-3xl font-decorative tracking-widest text-white text-glow">BlushfulGifts</div>
-            <p className="text-white/30 text-sm leading-relaxed font-light">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-20 mb-16 md:mb-32 relative z-10">
+          <div className="space-y-6 md:space-y-8 text-center md:text-left">
+            <div className="text-2xl md:text-3xl font-decorative tracking-widest text-white text-glow">BlushfulGifts</div>
+            <p className="text-white/30 text-xs md:text-sm leading-relaxed font-light">
               Preserving your most cherished wedding memories through the art of high-end resin preservation. Handcrafted with magic in every detail.
             </p>
-            <div className="flex gap-6">
+            <div className="flex justify-center md:justify-start gap-6">
               <a href="#" className="text-white/40 hover:text-gold transition-all"><Instagram size={20} /></a>
               <a href="#" className="text-white/40 hover:text-gold transition-all"><MessageCircle size={20} /></a>
             </div>
           </div>
           
-          <div>
-            <h4 className="text-gold uppercase tracking-widest text-xs font-bold mb-8">Quick Links</h4>
+          <div className="text-center md:text-left">
+            <h4 className="text-gold uppercase tracking-widest text-xs font-bold mb-6 md:mb-8">Quick Links</h4>
             <ul className="space-y-4 text-sm text-white/60">
-              <li><a href="#" className="hover:text-gold transition-colors">Shop All</a></li>
-              <li><a href="#" className="hover:text-gold transition-colors">Custom Orders</a></li>
-              <li><a href="#" className="hover:text-gold transition-colors">Our Process</a></li>
+              <li><a href="#shop" className="hover:text-gold transition-colors">Collections</a></li>
+              <li><a href="#shop" className="hover:text-gold transition-colors">Our Process</a></li>
               <li><a href="#" className="hover:text-gold transition-colors">Care Instructions</a></li>
             </ul>
           </div>
           
-          <div>
-            <h4 className="text-gold uppercase tracking-widest text-xs font-bold mb-8">Support</h4>
+          <div className="text-center md:text-left">
+            <h4 className="text-gold uppercase tracking-widest text-xs font-bold mb-6 md:mb-8">Support</h4>
             <ul className="space-y-4 text-sm text-white/60">
               <li><a href="#" className="hover:text-gold transition-colors">FAQ</a></li>
               <li><a href="#" className="hover:text-gold transition-colors">Shipping & Returns</a></li>
@@ -590,10 +971,11 @@ export default function App() {
             </ul>
           </div>
           
-          <div>
-            <h4 className="text-gold uppercase tracking-widest text-xs font-bold mb-8">Contact Us</h4>
+          <div className="text-center md:text-left">
+            <h4 className="text-gold uppercase tracking-widest text-xs font-bold mb-6 md:mb-8">Contact Us</h4>
             <ul className="space-y-4 text-sm text-white/60">
               <li>omkarathakur763@gmail.com</li>
+              <li>+91 7088159329</li>
               <li>Based in India</li>
               <li>Pan India Shipping</li>
             </ul>
@@ -610,7 +992,7 @@ export default function App() {
 
       {/* Floating WhatsApp */}
       <a 
-        href="https://wa.me/yournumber" 
+        href="https://wa.me/917088159329" 
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-8 right-8 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform z-50"
@@ -624,7 +1006,30 @@ export default function App() {
         items={cartItems}
         onUpdateQuantity={updateQuantity}
         onRemove={removeItem}
+        onCheckout={handleCartCheckout}
       />
+
+      <CheckoutModal 
+        isOpen={isCheckoutOpen}
+        onClose={() => setIsCheckoutOpen(false)}
+        items={checkoutItems}
+        total={checkoutItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)}
+      />
+
+      {/* Back to Top */}
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            onClick={scrollToTop}
+            className="fixed bottom-28 right-8 w-12 h-12 bg-white/5 backdrop-blur-md border border-white/10 text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-gold hover:text-dark-bg transition-all z-50"
+          >
+            <ChevronUp size={24} />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
