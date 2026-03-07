@@ -1,4 +1,4 @@
-import { ShoppingBag, Heart, Menu, X, Instagram, MessageCircle, Star, ShieldCheck, Truck, Package, Droplets, Clock, ChevronUp, Upload } from 'lucide-react';
+import { ShoppingBag, Heart, Menu, X, Instagram, MessageCircle, Star, ShieldCheck, Truck, Package, Droplets, Clock, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import React, { useState, useEffect } from 'react';
 
@@ -33,37 +33,20 @@ interface CartItem {
 
 const PRODUCTS: Product[] = [
   {
-    id: 'wooden-frames-square',
-    name: 'Wooden Frames (Square)',
-    category: 'Wooden Frames',
-    image: 'https://picsum.photos/seed/resin1/800/800',
+    id: 'led-blocks',
+    name: 'Thick Deep LED Blocks',
+    category: 'LED Blocks',
+    image: 'https://picsum.photos/seed/led/800/800',
     options: [
-      { label: '10×10', price: 3500 },
-      { label: '12×12', price: 3999 },
-      { label: '15×15', price: 4999, highlight: true },
-      { label: '18×18', price: 6999 },
-      { label: '20×20', price: 8999 },
+      { label: 'Circular 8 inch With LED', price: 3499 },
     ],
-    note: 'Custom sizes available. Sealed with our premium Eternity-Grade resin. ✨'
+    note: 'Other shapes available. A Snug home for your flowers. 🌸'
   },
   {
-    id: 'wooden-frames-rectangle',
-    name: 'Wooden Frames (Rectangle)',
-    category: 'Wooden Frames',
-    image: 'https://picsum.photos/seed/resin2/800/800',
-    options: [
-      { label: '12×9', price: 3500 },
-      { label: '12×16', price: 4500 },
-      { label: '14×18', price: 7250 },
-      { label: '16×24', price: 8999 },
-    ],
-    note: '16×24 available on request. Every piece is a Treasured memory. 🧸'
-  },
-  {
-    id: 'mould-preservation',
-    name: 'Mould-Based Preservations (Round / Agate)',
-    category: 'Mould-Based',
-    image: 'https://picsum.photos/seed/resin3/800/800',
+    id: 'flower-preservation-clock',
+    name: 'Flowers Preservation Clock',
+    category: 'Flower Clocks',
+    image: 'https://images.unsplash.com/photo-1621333100656-7848e72c3092?auto=format&fit=crop&q=80',
     options: [
       { label: '10 inch Without LED', price: 2999 },
       { label: '10 inch With LED', price: 3499 },
@@ -73,14 +56,17 @@ const PRODUCTS: Product[] = [
     note: 'More shapes available on demand. Experience our Express Magic! ⏳'
   },
   {
-    id: 'led-blocks',
-    name: 'Thick Deep LED Blocks',
-    category: 'LED Blocks',
-    image: 'https://picsum.photos/seed/resin4/800/800',
+    id: 'circular-varmala-preservation',
+    name: 'Circular Varmala Preservation',
+    category: 'Varmala Preservations',
+    image: 'https://picsum.photos/seed/varmala/800/800',
     options: [
-      { label: 'Circular 8 inch With LED', price: 3499 },
+      { label: '10 inch Circular', price: 3500 },
+      { label: '12 inch Circular', price: 3999 },
+      { label: '15 inch Circular', price: 4999, highlight: true },
+      { label: '18 inch Circular', price: 6999 },
     ],
-    note: 'Other shapes available. A Snug home for your flowers. 🌸'
+    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin. ✨'
   }
 ];
 
@@ -311,8 +297,6 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
   total: number
 }) => {
   const [step, setStep] = useState<'details' | 'success'>('details');
-  const [referenceImage, setReferenceImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -321,18 +305,6 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
     city: '',
     pincode: ''
   });
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setReferenceImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -347,7 +319,6 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
       `Address: ${formData.address}, ${formData.city} - ${formData.pincode}\n\n` +
       `*Order Summary:*\n${orderDetails}\n\n` +
       `*Total Amount:* ₹${total.toLocaleString()}\n\n` +
-      (referenceImage ? `*Note:* I have a reference image to share for this order. 📸\n\n` : '') +
       `Please confirm the order and share payment details. ✨`;
 
     const encodedMessage = encodeURIComponent(message);
@@ -463,43 +434,6 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                     />
                   </div>
 
-                  {/* Reference Image Upload */}
-                  <div className="space-y-2">
-                    <label className="block text-[10px] uppercase tracking-widest text-white/40 ml-1">Reference Image (Optional)</label>
-                    <div className="relative group">
-                      <input 
-                        type="file" 
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                      />
-                      <div className="w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-4 flex items-center justify-center gap-3 group-hover:border-gold/50 transition-colors">
-                        {imagePreview ? (
-                          <div className="flex items-center gap-3 w-full">
-                            <img src={imagePreview} alt="Preview" className="w-10 h-10 rounded object-cover border border-white/10" />
-                            <span className="text-xs text-white/60 truncate flex-1">{referenceImage?.name}</span>
-                            <button 
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setReferenceImage(null);
-                                setImagePreview(null);
-                              }}
-                              className="text-white/40 hover:text-red-400 z-20"
-                            >
-                              <X size={16} />
-                            </button>
-                          </div>
-                        ) : (
-                          <>
-                            <Upload size={18} className="text-white/40 group-hover:text-gold transition-colors" />
-                            <span className="text-xs text-white/40 group-hover:text-white/60 transition-colors">Upload reference image</span>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
                   <button type="submit" className="w-full bg-gold text-dark-bg py-4 rounded-xl font-bold hover:bg-gold-light transition-all duration-300 uppercase tracking-widest text-sm mt-4">
                     Confirm Order via WhatsApp
                   </button>
@@ -513,9 +447,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
               </div>
               <h2 className="text-3xl md:text-4xl font-serif">Order Received!</h2>
               <p className="text-white/60 text-sm md:text-base max-w-md mx-auto leading-relaxed">
-                Thank you for trusting BlushfulGifts with your treasured memories. Your order details have been transferred to our artisan at <span className="text-white">+91 7088159329</span>. 
-                {referenceImage && <span className="block mt-2 text-gold font-medium italic">Don't forget to attach your reference image in the WhatsApp chat! 📸</span>}
-                We will contact you shortly for the next steps! ✨
+                Thank you for trusting BlushfulGifts with your treasured memories. Your order details have been transferred to our artisan at <span className="text-white">+91 7088159329</span>. We will contact you shortly for the next steps! ✨
               </p>
               <button 
                 onClick={onClose}
@@ -767,8 +699,8 @@ export default function App() {
       {/* Latest Arrivals Section */}
       <section id="shop" className="py-16 md:py-32 px-6 max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12 md:mb-24">
-          <h2 className="text-3xl md:text-6xl mb-4 md:mb-6 font-decorative tracking-wide text-glow">Our Latest Arrivals</h2>
-          <div className="w-16 md:w-24 h-px bg-gold/30 mx-auto glow-gold" />
+          <h2 className="text-3xl md:text-6xl mb-4 md:mb-6 font-decorative tracking-wide text-glow">Our Collections</h2>
+          <div className="w-16 md:w-24 h-px bg-gold/30 mx-auto glow-gold mb-12" />
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
@@ -830,7 +762,7 @@ export default function App() {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-          {['Wooden Frames', 'Mould-Based', 'LED Blocks'].map((cat, i) => (
+          {['Varmala Preservations', 'Flower Clocks', 'LED Blocks'].map((cat, i) => (
             <motion.div 
               key={cat}
               initial={{ opacity: 0, y: 20 }}
