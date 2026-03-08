@@ -36,7 +36,7 @@ const PRODUCTS: Product[] = [
     id: 'led-blocks',
     name: 'Thick Deep LED Blocks',
     category: 'LED Blocks',
-    image: 'https://picsum.photos/seed/led/800/800',
+    image: 'https://i.pinimg.com/736x/cc/45/8b/cc458b9afd29371266f96bd1f52f2c4f.jpg',
     options: [
       { label: 'Circular 8 inch With LED', price: 3499 },
     ],
@@ -46,7 +46,7 @@ const PRODUCTS: Product[] = [
     id: 'flower-preservation-clock',
     name: 'Flowers Preservation Clock',
     category: 'Flower Clocks',
-    image: 'https://images.unsplash.com/photo-1621333100656-7848e72c3092?auto=format&fit=crop&q=80',
+    image: 'https://i.pinimg.com/736x/3d/f7/e6/3df7e6755e83413f4cb810544e3f495b.jpg',
     options: [
       { label: '10 inch Without LED', price: 2999 },
       { label: '10 inch With LED', price: 3499 },
@@ -56,17 +56,31 @@ const PRODUCTS: Product[] = [
     note: 'More shapes available on demand. Experience our Express Magic! ⏳'
   },
   {
-    id: 'circular-varmala-preservation',
-    name: 'Circular Varmala Preservation',
+    id: 'rectangular-wooden-frame',
+    name: 'Rectangular Wooden Frame',
     category: 'Varmala Preservations',
-    image: 'https://picsum.photos/seed/varmala/800/800',
+    image: 'https://i.pinimg.com/736x/75/c2/ad/75c2ad51d2cf34b10f60560baaf577fd.jpg',
     options: [
-      { label: '10 inch Circular', price: 3500 },
-      { label: '12 inch Circular', price: 3999 },
-      { label: '15 inch Circular', price: 4999, highlight: true },
-      { label: '18 inch Circular', price: 6999 },
+      { label: '10x12 inch Rectangular', price: 3500 },
+      { label: '12x15 inch Rectangular', price: 3999 },
+      { label: '15x18 inch Rectangular', price: 4999, highlight: true },
+      { label: '18x24 inch Rectangular', price: 6999 },
     ],
-    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin. ✨'
+    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin with a classic wooden frame. ✨'
+  },
+  {
+    id: 'square-wooden-frame',
+    name: 'Square Wooden Frame',
+    category: 'Varmala Preservations',
+    image: 'https://i.pinimg.com/736x/41/51/30/415130be818e26ef33a801148977bcb9.jpg',
+    options: [
+      { label: '10x10 inch Square', price: 3500 },
+      { label: '12x12 inch Square', price: 3999 },
+      { label: '15x15 inch Square', price: 4999, highlight: true },
+      { label: '18x18 inch Square', price: 6999 },
+      { label: '20x20 inch Square', price: 8999 },
+    ],
+    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin with a modern square wooden frame. ✨'
   }
 ];
 
@@ -83,7 +97,6 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
     { name: 'Collections', href: '#shop' },
     { name: 'About', href: '#about' },
     { name: 'Contact', href: '#contact' },
@@ -612,92 +625,11 @@ export default function App() {
         <div className="absolute inset-0 fairy-dust" />
       </div>
 
-      {/* Announcement Bar */}
-      <div className="bg-dark-bg text-white/60 py-2 text-center text-[10px] md:text-[9px] uppercase tracking-[0.2em] md:tracking-[0.4em] z-[60] relative border-b border-white/5">
-        <span className="inline-flex items-center gap-2">
-          <ShieldCheck size={10} className="text-gold" />
-          Free Shipping for Orders Over ₹5000
-          <ShieldCheck size={10} className="text-gold" />
-        </span>
-      </div>
 
       <Navbar cartCount={cartItems.reduce((s, i) => s + i.quantity, 0)} onOpenCart={() => setIsCartOpen(true)} />
 
-      {/* Hero Section */}
-      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img 
-            src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80" 
-            alt="Magical Forest" 
-            className="w-full h-full object-cover opacity-60 scale-105"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-dark-bg/40 via-transparent to-dark-bg" />
-        </div>
-        
-        <div className="relative z-10 text-center px-6 max-w-5xl pt-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.5 }}
-          >
-            <h1 className="text-5xl md:text-9xl mb-4 md:mb-8 leading-tight text-white text-glow font-decorative drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-              Memories <br/> <span className="md:ml-24">Magic</span>
-            </h1>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1, duration: 1 }}
-              className="flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-center"
-            >
-              <div className="w-12 h-px bg-gold/50 hidden md:block" />
-              <p className="text-white/80 text-[10px] md:text-sm uppercase tracking-[0.3em] md:tracking-[0.5em] font-light text-glow px-4 md:px-0">
-                Building the Heartbeat of Gifting, from the Heart. 🌸
-              </p>
-              <div className="w-12 h-px bg-gold/50 hidden md:block" />
-            </motion.div>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 2, duration: 1 }}
-              className="mt-12 md:mt-20 flex flex-col items-center gap-4"
-            >
-              <span className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] text-white/40 font-light">Scroll to Explore</span>
-              <motion.div
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="w-5 h-9 border border-white/20 rounded-full flex justify-center p-1.5"
-              >
-                <motion.div 
-                  animate={{ y: [0, 15, 0], opacity: [1, 0, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-1 h-1.5 bg-gold/80 rounded-full" 
-                />
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </div>
-
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-dark-bg to-transparent pointer-events-none" />
-        
-        {/* Scrolling Text Marquee */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden py-8 border-t border-white/5 bg-dark-bg/50 backdrop-blur-sm">
-          <motion.div 
-            animate={{ x: [0, -1000] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="flex whitespace-nowrap gap-20 items-center"
-          >
-            {[...Array(10)].map((_, i) => (
-              <span key={i} className="text-[10px] uppercase tracking-[1em] text-white/20 font-light flex items-center gap-20">
-                BlushfulGifts <Star size={8} className="text-gold/30" /> Magical Memories <Star size={8} className="text-gold/30" /> Handcrafted with Love
-              </span>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
       {/* Latest Arrivals Section */}
-      <section id="shop" className="py-16 md:py-32 px-6 max-w-7xl mx-auto relative z-10">
+      <section id="shop" className="pt-32 md:pt-48 pb-16 md:pb-32 px-6 max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12 md:mb-24">
           <h2 className="text-3xl md:text-6xl mb-4 md:mb-6 font-decorative tracking-wide text-glow">Our Collections</h2>
           <div className="w-16 md:w-24 h-px bg-gold/30 mx-auto glow-gold mb-12" />
