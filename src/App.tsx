@@ -27,6 +27,7 @@ interface CartItem {
   price: number;
   quantity: number;
   image: string;
+  referencePhoto?: File | null;
 }
 
 // --- Data ---
@@ -88,7 +89,7 @@ const PRODUCTS: Product[] = [
 
 const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -104,22 +105,27 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
 
   return (
     <>
-      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-dark-bg/90 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-transparent py-4 md:py-8'}`}>
+      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-dark-bg/90 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-gradient-to-b from-black/60 to-transparent py-4 md:py-8'}`}>
         <div className="max-w-7xl mx-auto px-6">
           {/* Top Row: Search, Logo, Icons */}
           <div className="flex justify-between items-center mb-0 md:mb-6">
             <div className="flex-1 md:hidden">
               <button 
-                onClick={() => setIsMobileMenuOpen(true)}
-                className="text-white/60 hover:text-gold transition-colors"
+                onClick={() => setIsMenuOpen(true)}
+                className="w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:text-gold transition-all active:scale-95 shadow-lg"
+                aria-label="Open Menu"
               >
-                <Menu size={24} />
+                <Menu size={20} />
               </button>
             </div>
 
             <div className="flex-1 hidden md:block">
-              <button className="text-white/60 hover:text-gold transition-colors">
-                <Menu size={20} />
+              <button 
+                onClick={() => setIsMenuOpen(true)}
+                className="w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/5 hover:border-white/20 rounded-full text-white/60 hover:text-gold transition-all"
+                aria-label="Open Menu"
+              >
+                <Menu size={18} />
               </button>
             </div>
             
@@ -131,13 +137,21 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
 
             <div className="flex-1 flex justify-end items-center gap-4 md:gap-6">
               <div className="hidden md:flex gap-4 text-white/40">
-                <Instagram size={18} className="hover:text-gold cursor-pointer transition-colors" />
-                <MessageCircle size={18} className="hover:text-gold cursor-pointer transition-colors" />
+                <a href="https://www.instagram.com/blushfulgifts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
+                  <Instagram size={18} />
+                </a>
+                <a href="https://wa.me/917088159329" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
+                  <MessageCircle size={18} />
+                </a>
               </div>
-              <button onClick={onOpenCart} className="relative hover:text-gold transition-colors">
-                <ShoppingBag size={22} />
+              <button 
+                onClick={onOpenCart} 
+                className="relative w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:text-gold transition-all active:scale-95 shadow-lg"
+                aria-label="Open Cart"
+              >
+                <ShoppingBag size={20} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-gold text-dark-bg text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-gold text-dark-bg text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-lg">
                     {cartCount}
                   </span>
                 )}
@@ -154,15 +168,15 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Menu Overlay */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {isMenuOpen && (
           <>
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => setIsMenuOpen(false)}
               className="fixed inset-0 bg-black/90 backdrop-blur-lg z-[100]"
             />
             <motion.div 
@@ -174,7 +188,7 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
             >
               <div className="flex justify-between items-center mb-12">
                 <span className="text-xl font-decorative tracking-widest text-gold">Blushful</span>
-                <button onClick={() => setIsMobileMenuOpen(false)} className="text-white/40"><X size={24} /></button>
+                <button onClick={() => setIsMenuOpen(false)} className="text-white/40"><X size={24} /></button>
               </div>
               
               <nav className="flex flex-col gap-8">
@@ -185,7 +199,7 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
                     transition={{ delay: i * 0.1 }}
                     key={link.name} 
                     href={link.href} 
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={() => setIsMenuOpen(false)}
                     className="text-2xl font-serif text-white/80 hover:text-gold transition-colors"
                   >
                     {link.name}
@@ -195,8 +209,12 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
 
               <div className="mt-auto pt-12 border-t border-white/5 space-y-6">
                 <div className="flex gap-6 text-white/40">
-                  <Instagram size={24} />
-                  <MessageCircle size={24} />
+                  <a href="https://www.instagram.com/blushfulgifts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
+                    <Instagram size={24} />
+                  </a>
+                  <a href="https://wa.me/917088159329" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
+                    <MessageCircle size={24} />
+                  </a>
                 </div>
                 <p className="text-[10px] uppercase tracking-widest text-white/20">
                   Handcrafted with Magic ✨
@@ -212,27 +230,15 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
 
 const ProductCard: React.FC<{ 
   product: Product; 
-  onAddToCart: (item: CartItem) => void;
-  onBuyNow: (item: CartItem) => void;
-}> = ({ product, onAddToCart, onBuyNow }) => {
-  const [selectedOption, setSelectedOption] = useState(product.options[0]);
-
-  const item = {
-    id: `${product.id}-${selectedOption.label}`,
-    productId: product.id,
-    name: product.name,
-    optionLabel: selectedOption.label,
-    price: selectedOption.price,
-    quantity: 1,
-    image: product.image
-  };
-
+  onViewDetails: (product: Product) => void;
+}> = ({ product, onViewDetails }) => {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group text-center"
+      className="group text-center cursor-pointer"
+      onClick={() => onViewDetails(product)}
     >
       <div className="relative aspect-[3/4] mb-6 overflow-hidden rounded-sm border border-white/5 group-hover:border-gold/30 transition-all duration-700 shadow-lg">
         <img 
@@ -243,63 +249,183 @@ const ProductCard: React.FC<{
         />
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-500" />
         
-        {/* Quick Add Overlay */}
-        <div className="absolute bottom-0 left-0 w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 flex flex-col gap-2">
-          <button 
-            onClick={() => onAddToCart(item)}
-            className="w-full bg-white/10 backdrop-blur-md border border-white/20 text-white py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-dark-bg transition-all"
-          >
-            Add to Cart
-          </button>
-          <button 
-            onClick={() => onBuyNow(item)}
-            className="w-full bg-gold text-dark-bg py-3 text-[10px] uppercase tracking-widest font-bold hover:bg-gold-light transition-all"
-          >
-            Buy Now
-          </button>
+        {/* Customizable Tag Overlay */}
+        <div className="absolute top-4 left-4 z-20">
+          <div className="bg-dark-bg/80 backdrop-blur-md border border-gold/50 rounded-full px-3 py-1 shadow-xl">
+            <span className="text-[8px] uppercase tracking-[0.2em] text-gold font-bold">Completely Customizable</span>
+          </div>
+        </div>
+
+        {/* View Details Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <div className="px-6 py-3 bg-gold text-dark-bg text-[10px] uppercase tracking-widest font-bold rounded-full shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+            View Details
+          </div>
         </div>
       </div>
 
       <div className="space-y-2">
-        <h3 className="text-lg font-serif tracking-wide text-white/90">{product.name}</h3>
-        <div className="flex flex-col items-center gap-2">
-          <div className="relative">
-            <select 
-              value={selectedOption.label}
-              onChange={(e) => {
-                const opt = product.options.find(o => o.label === e.target.value);
-                if (opt) setSelectedOption(opt);
-              }}
-              className="appearance-none bg-white/5 rounded-full px-6 py-1 text-[10px] uppercase tracking-widest text-white/60 border border-white/10 focus:ring-0 cursor-pointer hover:border-gold transition-colors pr-10"
-            >
-              {product.options.map((opt) => (
-                <option key={opt.label} value={opt.label} className="bg-dark-surface">
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-white/40">
-              <Clock size={10} />
-            </div>
+        <div>
+          <div className="inline-block mb-1">
+            <span className="text-[9px] uppercase tracking-[0.3em] text-gold/60 font-medium">Handcrafted Magic</span>
           </div>
-          <div className="text-gold font-serif text-xl">₹{selectedOption.price.toLocaleString()}</div>
-          <div className="flex flex-col w-full gap-2 mt-2">
-            <button 
-              onClick={() => onAddToCart(item)}
-              className="w-full px-6 py-2.5 border border-gold/30 text-gold text-[10px] uppercase tracking-[0.2em] hover:bg-gold hover:text-dark-bg transition-all duration-500 rounded-full font-medium"
-            >
-              Add to Cart
-            </button>
-            <button 
-              onClick={() => onBuyNow(item)}
-              className="w-full md:hidden px-6 py-2.5 bg-gold text-dark-bg text-[10px] uppercase tracking-[0.2em] hover:bg-gold-light transition-all duration-500 rounded-full font-bold"
-            >
-              Buy Now
-            </button>
-          </div>
+          <h3 className="text-lg font-serif tracking-wide text-white/90">{product.name}</h3>
         </div>
+        <div className="text-gold font-serif">Starting from ₹{Math.min(...product.options.map(o => o.price)).toLocaleString()}</div>
       </div>
     </motion.div>
+  );
+};
+
+const ProductDetailModal = ({ 
+  product, 
+  isOpen, 
+  onClose, 
+  onAddToCart, 
+  onBuyNow 
+}: { 
+  product: Product | null, 
+  isOpen: boolean, 
+  onClose: () => void,
+  onAddToCart: (item: CartItem) => void,
+  onBuyNow: (item: CartItem) => void
+}) => {
+  const [selectedOption, setSelectedOption] = useState<ProductOption | null>(null);
+  const [referencePhoto, setReferencePhoto] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (product) {
+      setSelectedOption(product.options[0]);
+      setReferencePhoto(null);
+    }
+  }, [product]);
+
+  if (!product || !selectedOption) return null;
+
+  const item: CartItem = {
+    id: `${product.id}-${selectedOption.label}-${Date.now()}`,
+    productId: product.id,
+    name: product.name,
+    optionLabel: selectedOption.label,
+    price: selectedOption.price,
+    quantity: 1,
+    image: product.image,
+    referencePhoto: referencePhoto
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/90 backdrop-blur-xl"
+          />
+          <motion.div 
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            className="relative bg-dark-surface border border-white/10 w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
+          >
+            <button 
+              onClick={onClose}
+              className="absolute top-4 right-4 z-10 p-2 bg-black/20 backdrop-blur-md rounded-full text-white/60 hover:text-white transition-colors"
+            >
+              <X size={20} />
+            </button>
+
+            {/* Image Section */}
+            <div className="w-full md:w-1/2 h-[300px] md:h-auto relative">
+              <img 
+                src={product.image} 
+                alt={product.name} 
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-surface via-transparent to-transparent md:bg-gradient-to-r" />
+            </div>
+
+            {/* Content Section */}
+            <div className="w-full md:w-1/2 p-6 md:p-10 overflow-y-auto custom-scrollbar flex flex-col">
+              <div className="mb-8">
+                <span className="text-[10px] uppercase tracking-[0.4em] text-gold font-bold mb-2 block">
+                  {product.category}
+                </span>
+                <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">{product.name}</h2>
+                <div className="w-12 h-px bg-gold/50 mb-6" />
+                <div className="space-y-4">
+                  <h4 className="text-[10px] uppercase tracking-widest text-gold font-bold">Description</h4>
+                  <p className="text-white/60 leading-relaxed font-light italic">
+                    {product.note || "Preserve your most cherished memories in our premium Eternity-Grade resin. Each piece is handcrafted with magic and care to ensure your love story twinkles forever. ✨"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-6 mt-auto">
+                {/* Options Selector */}
+                <div className="space-y-3">
+                  <label className="text-[10px] uppercase tracking-widest text-white/40 ml-1">Select Size / Option</label>
+                  <div className="grid grid-cols-1 gap-2">
+                    {product.options.map((opt) => (
+                      <button
+                        key={opt.label}
+                        onClick={() => setSelectedOption(opt)}
+                        className={`flex justify-between items-center px-6 py-3 rounded-xl border transition-all duration-300 ${selectedOption.label === opt.label ? 'bg-gold/10 border-gold text-white' : 'bg-white/5 border-white/10 text-white/60 hover:border-white/30'}`}
+                      >
+                        <span className="text-xs uppercase tracking-widest">{opt.label}</span>
+                        <span className="text-gold font-serif">₹{opt.price.toLocaleString()}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Reference Photo */}
+                <div className="space-y-3">
+                  <label className="text-[10px] uppercase tracking-widest text-white/40 ml-1">Add Reference Photo (Optional)</label>
+                  <label className={`flex items-center justify-center gap-3 w-full border rounded-xl py-4 text-xs uppercase tracking-widest cursor-pointer transition-all duration-300 ${referencePhoto ? 'bg-gold/10 border-gold text-gold' : 'bg-white/5 border-white/10 text-white/40 hover:border-gold/50'}`}>
+                    <Camera size={18} className={referencePhoto ? 'animate-pulse' : ''} />
+                    <span className="truncate max-w-[200px]">
+                      {referencePhoto ? referencePhoto.name : 'Upload Image'}
+                    </span>
+                    <input 
+                      type="file" 
+                      accept="image/*"
+                      className="hidden" 
+                      onChange={(e) => setReferencePhoto(e.target.files?.[0] || null)}
+                    />
+                  </label>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="grid grid-cols-2 gap-4 pt-4">
+                  <button 
+                    onClick={() => {
+                      onAddToCart(item);
+                      onClose();
+                    }}
+                    className="bg-white/5 border border-gold/30 text-gold py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold hover:text-dark-bg transition-all duration-500"
+                  >
+                    Add to Cart
+                  </button>
+                  <button 
+                    onClick={() => {
+                      onBuyNow(item);
+                      onClose();
+                    }}
+                    className="bg-gold text-dark-bg py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold-light transition-all duration-500"
+                  >
+                    Buy Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
   );
 };
 
@@ -324,14 +450,18 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
     e.preventDefault();
     
     // Format WhatsApp message
-    const orderDetails = items.map(item => `- ${item.name} (${item.optionLabel}) x ${item.quantity}: ₹${(item.price * item.quantity).toLocaleString()}`).join('\n');
+    const orderDetails = items.map(item => {
+      const photoNote = item.referencePhoto ? ' [Reference Photo Attached]' : '';
+      return `- ${item.name} (${item.optionLabel})${photoNote} x ${item.quantity}: ₹${(item.price * item.quantity).toLocaleString()}`;
+    }).join('\n');
+
     const message = `*New Order from BlushfulGifts*\n\n` +
       `*Customer Details:*\n` +
       `Name: ${formData.name}\n` +
       `Email: ${formData.email}\n` +
       `Phone: ${formData.phone}\n` +
       `Address: ${formData.address}, ${formData.city} - ${formData.pincode}\n\n` +
-      `*Reference Photo:* ${formData.referencePhoto ? 'Yes (Will share on WhatsApp)' : 'Not provided'}\n\n` +
+      `*General Reference Photo:* ${formData.referencePhoto ? 'Yes (Will share on WhatsApp)' : 'Not provided'}\n\n` +
       `*Order Summary:*\n${orderDetails}\n\n` +
       `*Total Amount:* ₹${total.toLocaleString()}\n\n` +
       `Please confirm the order and share payment details. ✨`;
@@ -577,8 +707,14 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onChec
                       <img src={item.image} alt={item.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-sm font-medium">{item.name}</h4>
-                      <p className="text-[10px] md:text-xs text-white/40 mb-2">{item.optionLabel}</p>
+                      <h4 className="text-sm font-medium flex items-center gap-2">
+                        {item.name}
+                        {item.referencePhoto && <Camera size={12} className="text-gold animate-pulse" />}
+                      </h4>
+                      <p className="text-[10px] md:text-xs text-white/40 mb-2">
+                        {item.optionLabel}
+                        {item.referencePhoto && <span className="ml-2 text-gold/60 italic">(Photo attached)</span>}
+                      </p>
                       <div className="flex justify-between items-center">
                         <div className="flex items-center border border-white/10 rounded-md">
                           <button onClick={() => onUpdateQuantity(item.id, -1)} className="px-3 py-1.5 hover:text-gold">-</button>
@@ -631,6 +767,8 @@ export default function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -695,15 +833,14 @@ export default function App() {
             <ProductCard 
               key={product.id} 
               product={product} 
-              onAddToCart={addToCart} 
-              onBuyNow={buyNow}
+              onViewDetails={(p) => setSelectedProduct(p)}
             />
           ))}
         </div>
       </section>
 
       {/* Welcome Section (Split Layout) */}
-      <section className="py-16 md:py-32 relative overflow-hidden bg-dark-bg z-10">
+      <section id="about" className="py-16 md:py-32 relative overflow-hidden bg-dark-bg z-10">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 md:gap-24 items-center">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -715,10 +852,12 @@ export default function App() {
             <p className="text-white/50 text-base md:text-lg font-light leading-relaxed max-w-lg mx-auto md:mx-0">
               Step into a world of enchantment and magic, where your most <span className="text-gold">Treasured</span> memories are kept <span className="text-gold">Snug</span> and safe. At BlushfulGifts, we create <span className="text-gold">Heartfelt</span> treasures with <span className="text-gold">Express</span> speed, ensuring your love story <span className="text-gold">Twinkles</span> <span className="text-gold">Forever</span>. ✨
             </p>
-            <button className="group relative px-8 md:px-10 py-3 md:py-4 overflow-hidden border border-white/20 transition-all hover:border-gold">
-              <span className="relative z-10 text-[10px] md:text-xs uppercase tracking-[0.3em] group-hover:text-dark-bg transition-colors">More About Us</span>
-              <div className="absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-            </button>
+            <a href="#why-us" className="inline-block">
+              <button className="group relative px-8 md:px-10 py-3 md:py-4 overflow-hidden border border-white/20 transition-all hover:border-gold">
+                <span className="relative z-10 text-[10px] md:text-xs uppercase tracking-[0.3em] group-hover:text-dark-bg transition-colors">More About Us</span>
+                <div className="absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              </button>
+            </a>
           </motion.div>
 
           <motion.div 
@@ -750,7 +889,8 @@ export default function App() {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           {['Varmala Preservations', 'Flower Clocks', 'LED Blocks'].map((cat, i) => (
-            <motion.div 
+            <motion.a 
+              href="#shop"
               key={cat}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -768,13 +908,13 @@ export default function App() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <h3 className="text-2xl tracking-widest uppercase font-decorative text-white group-hover:scale-110 transition-transform">{cat}</h3>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </div>
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-16 md:py-32 bg-dark-bg relative overflow-hidden">
+      <section id="why-us" className="py-16 md:py-32 bg-dark-bg relative overflow-hidden">
         <div className="absolute inset-0 nebula-bg opacity-50" />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12">
@@ -804,7 +944,7 @@ export default function App() {
       </section>
 
       {/* Blushful Policies Section */}
-      <section className="py-16 md:py-32 px-6 max-w-7xl mx-auto border-t border-white/5 relative z-10">
+      <section id="policies" className="py-16 md:py-32 px-6 max-w-7xl mx-auto border-t border-white/5 relative z-10">
         <div className="text-center mb-12 md:mb-24">
           <h2 className="text-3xl md:text-6xl font-decorative">Blushful Policies 🌸</h2>
           <p className="text-white/40 uppercase tracking-widest text-[10px] md:text-xs mt-4">Transparent & Adorable</p>
@@ -857,7 +997,7 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-dark-bg border-t border-white/5 pt-16 md:pt-32 pb-16 px-6 relative overflow-hidden">
+      <footer id="contact" className="bg-dark-bg border-t border-white/5 pt-16 md:pt-32 pb-16 px-6 relative overflow-hidden">
         <div className="absolute bottom-0 left-0 w-full h-1/2 nebula-bg opacity-30" />
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-20 mb-16 md:mb-32 relative z-10">
           <div className="space-y-6 md:space-y-8 text-center md:text-left">
@@ -866,8 +1006,12 @@ export default function App() {
               Preserving your most cherished wedding memories through the art of high-end resin preservation. Handcrafted with magic in every detail.
             </p>
             <div className="flex justify-center md:justify-start gap-6">
-              <a href="#" className="text-white/40 hover:text-gold transition-all"><Instagram size={20} /></a>
-              <a href="#" className="text-white/40 hover:text-gold transition-all"><MessageCircle size={20} /></a>
+              <a href="https://www.instagram.com/blushfulgifts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-gold transition-all">
+                <Instagram size={20} />
+              </a>
+              <a href="https://wa.me/917088159329" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-gold transition-all">
+                <MessageCircle size={20} />
+              </a>
             </div>
           </div>
           
@@ -875,18 +1019,18 @@ export default function App() {
             <h4 className="text-gold uppercase tracking-widest text-xs font-bold mb-6 md:mb-8">Quick Links</h4>
             <ul className="space-y-4 text-sm text-white/60">
               <li><a href="#shop" className="hover:text-gold transition-colors">Collections</a></li>
-              <li><a href="#shop" className="hover:text-gold transition-colors">Our Process</a></li>
-              <li><a href="#" className="hover:text-gold transition-colors">Care Instructions</a></li>
+              <li><a href="#why-us" className="hover:text-gold transition-colors">Our Process</a></li>
+              <li><a href="#policies" className="hover:text-gold transition-colors">Care Instructions</a></li>
             </ul>
           </div>
           
           <div className="text-center md:text-left">
             <h4 className="text-gold uppercase tracking-widest text-xs font-bold mb-6 md:mb-8">Support</h4>
             <ul className="space-y-4 text-sm text-white/60">
-              <li><a href="#" className="hover:text-gold transition-colors">FAQ</a></li>
-              <li><a href="#" className="hover:text-gold transition-colors">Shipping & Returns</a></li>
-              <li><a href="#" className="hover:text-gold transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-gold transition-colors">Terms of Service</a></li>
+              <li><a href="#policies" className="hover:text-gold transition-colors">FAQ</a></li>
+              <li><a href="#policies" className="hover:text-gold transition-colors">Shipping & Returns</a></li>
+              <li><a href="#policies" className="hover:text-gold transition-colors">Privacy Policy</a></li>
+              <li><a href="#policies" className="hover:text-gold transition-colors">Terms of Service</a></li>
             </ul>
           </div>
           
@@ -918,6 +1062,14 @@ export default function App() {
       >
         <MessageCircle size={32} fill="currentColor" />
       </a>
+
+      <ProductDetailModal 
+        product={selectedProduct}
+        isOpen={!!selectedProduct}
+        onClose={() => setSelectedProduct(null)}
+        onAddToCart={addToCart}
+        onBuyNow={buyNow}
+      />
 
       <CartDrawer 
         isOpen={isCartOpen} 
