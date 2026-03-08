@@ -148,6 +148,25 @@ const PRODUCTS: Product[] = [
 
 // --- Components ---
 
+const Sparkles = () => {
+  return (
+    <div className="absolute inset-0 pointer-events-none z-0">
+      {[...Array(20)].map((_, i) => (
+        <div 
+          key={i}
+          className="sparkle-particle"
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            opacity: Math.random() * 0.5 + 0.2
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () => void }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -166,7 +185,7 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
 
   return (
     <>
-      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-dark-bg/90 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-gradient-to-b from-black/60 to-transparent py-4 md:py-8'}`}>
+      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-white/80 backdrop-blur-xl border-b border-rose-100 py-4' : 'bg-gradient-to-b from-white/40 to-transparent py-4 md:py-8'}`}>
         <div className="max-w-7xl mx-auto px-6">
           {/* Top Row: Search, Logo, Icons */}
           <div className="grid grid-cols-[1fr_auto_1fr] items-center mb-0 md:mb-6">
@@ -174,7 +193,7 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
               <div className="md:hidden">
                 <button 
                   onClick={() => setIsMenuOpen(true)}
-                  className="w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:text-gold transition-all active:scale-95 shadow-lg"
+                  className="w-10 h-10 flex items-center justify-center bg-rose-100/50 backdrop-blur-md border border-rose-200 rounded-full text-rose-900 hover:text-gold transition-all active:scale-95 shadow-lg"
                   aria-label="Open Menu"
                 >
                   <Menu size={20} />
@@ -184,7 +203,7 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
               <div className="hidden md:block">
                 <button 
                   onClick={() => setIsMenuOpen(true)}
-                  className="w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/5 hover:border-white/20 rounded-full text-white/60 hover:text-gold transition-all"
+                  className="w-10 h-10 flex items-center justify-center bg-rose-50/50 hover:bg-rose-100/50 backdrop-blur-md border border-rose-100 hover:border-rose-200 rounded-full text-rose-900/60 hover:text-gold transition-all"
                   aria-label="Open Menu"
                 >
                   <Menu size={18} />
@@ -200,14 +219,14 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
                   className="w-8 h-8 md:w-14 md:h-14 rounded-full border border-gold/30 shadow-lg object-cover flex-shrink-0" 
                   referrerPolicy="no-referrer" 
                 />
-                <h1 className="text-xl sm:text-2xl md:text-5xl font-decorative tracking-wider md:tracking-widest text-white text-glow whitespace-nowrap">
+                <h1 className="text-xl sm:text-2xl md:text-5xl font-decorative tracking-wider md:tracking-widest text-rose-800 text-glow whitespace-nowrap">
                   BlushfulGifts
                 </h1>
               </div>
             </div>
 
             <div className="flex justify-end items-center gap-4 md:gap-6">
-              <div className="hidden md:flex gap-4 text-white/40">
+              <div className="hidden md:flex gap-4 text-rose-900/40">
                 <a href="https://www.instagram.com/blushfulgifts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
                   <Instagram size={18} />
                 </a>
@@ -217,12 +236,12 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
               </div>
               <button 
                 onClick={onOpenCart} 
-                className="relative w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:text-gold transition-all active:scale-95 shadow-lg flex-shrink-0"
+                className="relative w-10 h-10 flex items-center justify-center bg-rose-100/50 backdrop-blur-md border border-rose-200 rounded-full text-rose-900 hover:text-gold transition-all active:scale-95 shadow-lg flex-shrink-0"
                 aria-label="Open Cart"
               >
                 <ShoppingBag size={20} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-gold text-dark-bg text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-lg">
+                  <span className="absolute -top-1 -right-1 bg-gold text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-lg">
                     {cartCount}
                   </span>
                 )}
@@ -231,7 +250,7 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
           </div>
 
           {/* Bottom Row: Navigation */}
-          <nav className="hidden md:flex justify-center gap-12 text-[11px] uppercase tracking-[0.3em] font-medium text-white/70">
+          <nav className="hidden md:flex justify-center gap-12 text-[11px] uppercase tracking-[0.3em] font-medium text-rose-900/70">
             {navLinks.map(link => (
               <a key={link.name} href={link.href} className="hover:text-gold transition-colors">{link.name}</a>
             ))}
@@ -248,21 +267,21 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMenuOpen(false)}
-              className="fixed inset-0 bg-black/90 backdrop-blur-lg z-[100]"
+              className="fixed inset-0 bg-rose-900/20 backdrop-blur-md z-[100]"
             />
             <motion.div 
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed left-0 top-0 h-full w-[80%] max-w-xs bg-dark-surface z-[101] p-8 flex flex-col"
+              className="fixed left-0 top-0 h-full w-[80%] max-w-xs bg-dark-surface z-[101] p-8 flex flex-col shadow-2xl"
             >
               <div className="flex justify-between items-center mb-12">
                 <div className="flex items-center gap-3">
                   <img src={BRAND_LOGO} alt="Logo" className="w-10 h-10 rounded-full border border-gold/30 object-cover" referrerPolicy="no-referrer" />
                   <span className="text-xl font-decorative tracking-widest text-gold">Blushful</span>
                 </div>
-                <button onClick={() => setIsMenuOpen(false)} className="text-white/40"><X size={24} /></button>
+                <button onClick={() => setIsMenuOpen(false)} className="text-rose-900/40"><X size={24} /></button>
               </div>
               
               <nav className="flex flex-col gap-8">
@@ -274,15 +293,15 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
                     key={link.name} 
                     href={link.href} 
                     onClick={() => setIsMenuOpen(false)}
-                    className="text-2xl font-serif text-white/80 hover:text-gold transition-colors"
+                    className="text-2xl font-serif text-rose-900/80 hover:text-gold transition-colors"
                   >
                     {link.name}
                   </motion.a>
                 ))}
               </nav>
 
-              <div className="mt-auto pt-12 border-t border-white/5 space-y-6">
-                <div className="flex gap-6 text-white/40">
+              <div className="mt-auto pt-12 border-t border-rose-200 space-y-6">
+                <div className="flex gap-6 text-rose-900/40">
                   <a href="https://www.instagram.com/blushfulgifts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
                     <Instagram size={24} />
                   </a>
@@ -290,7 +309,7 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
                     <MessageCircle size={24} />
                   </a>
                 </div>
-                <p className="text-[10px] uppercase tracking-widest text-white/20">
+                <p className="text-[10px] uppercase tracking-widest text-rose-900/30">
                   Handcrafted with Magic ✨
                 </p>
               </div>
@@ -314,25 +333,25 @@ const ProductCard: React.FC<{
       className="group text-center cursor-pointer"
       onClick={() => onViewDetails(product)}
     >
-      <div className="relative aspect-[3/4] mb-6 overflow-hidden rounded-sm border border-white/5 group-hover:border-gold/30 transition-all duration-700 shadow-lg">
+      <div className="relative aspect-[3/4] mb-6 overflow-hidden rounded-sm border border-rose-100 group-hover:border-gold/30 transition-all duration-700 shadow-lg">
         <img 
           src={product.image} 
           alt={product.name} 
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-500" />
+        <div className="absolute inset-0 bg-rose-900/0 group-hover:bg-rose-900/20 transition-colors duration-500" />
         
         {/* Customizable Tag Overlay */}
         <div className="absolute top-4 left-4 z-20">
-          <div className="bg-dark-bg/80 backdrop-blur-md border border-gold/50 rounded-full px-3 py-1 shadow-xl">
+          <div className="bg-white/80 backdrop-blur-md border border-gold/50 rounded-full px-3 py-1 shadow-xl">
             <span className="text-[8px] uppercase tracking-[0.2em] text-gold font-bold">Completely Customizable</span>
           </div>
         </div>
 
         {/* View Details Overlay */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          <div className="px-6 py-3 bg-gold text-dark-bg text-[10px] uppercase tracking-widest font-bold rounded-full shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+          <div className="px-6 py-3 bg-gold text-white text-[10px] uppercase tracking-widest font-bold rounded-full shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
             View Details
           </div>
         </div>
@@ -343,7 +362,7 @@ const ProductCard: React.FC<{
           <div className="inline-block mb-1">
             <span className="text-[9px] uppercase tracking-[0.3em] text-gold/60 font-medium">Handcrafted Magic</span>
           </div>
-          <h3 className="text-lg font-serif tracking-wide text-white/90">{product.name}</h3>
+          <h3 className="text-lg font-serif tracking-wide text-rose-900">{product.name}</h3>
         </div>
         <div className="text-gold font-serif">Starting from ₹{Math.min(...product.options.map(o => o.price)).toLocaleString()}</div>
       </div>
@@ -405,17 +424,17 @@ const ProductDetailModal = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/90 backdrop-blur-xl"
+            className="absolute inset-0 bg-rose-900/20 backdrop-blur-md"
           />
           <motion.div 
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative bg-dark-surface border border-white/10 w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
+            className="relative bg-dark-surface border border-rose-200/50 w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
           >
             <button 
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 p-2 bg-black/20 backdrop-blur-md rounded-full text-white/60 hover:text-white transition-colors"
+              className="absolute top-4 right-4 z-10 p-2 bg-rose-900/10 backdrop-blur-md rounded-full text-rose-900/60 hover:text-rose-900 transition-colors"
             >
               <X size={20} />
             </button>
@@ -437,11 +456,11 @@ const ProductDetailModal = ({
                 <span className="text-[10px] uppercase tracking-[0.4em] text-gold font-bold mb-2 block">
                   {product.category}
                 </span>
-                <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">{product.name}</h2>
+                <h2 className="text-3xl md:text-4xl font-serif text-rose-900 mb-4">{product.name}</h2>
                 <div className="w-12 h-px bg-gold/50 mb-6" />
                 <div className="space-y-4">
                   <h4 className="text-[10px] uppercase tracking-widest text-gold font-bold">Description</h4>
-                  <p className="text-white/60 leading-relaxed font-light italic">
+                  <p className="text-rose-900/60 leading-relaxed font-light italic">
                     {product.note || "Preserve your most cherished memories in our premium Eternity-Grade resin. Each piece is handcrafted with magic and care to ensure your love story twinkles forever. ✨"}
                   </p>
                 </div>
@@ -458,10 +477,10 @@ const ProductDetailModal = ({
                   ].map((feature, idx) => (
                     <div 
                       key={idx} 
-                      className="flex items-center gap-2 px-3 py-2 border border-[#E91E63] bg-white rounded-md shadow-sm"
+                      className="flex items-center gap-2 px-3 py-2 border border-rose-200 bg-white/60 backdrop-blur-sm rounded-md shadow-sm"
                     >
-                      <span className="text-[#E91E63]">{feature.icon}</span>
-                      <span className="text-[10px] font-semibold text-gray-800 tracking-tight">{feature.text}</span>
+                      <span className="text-rose-500">{feature.icon}</span>
+                      <span className="text-[10px] font-semibold text-rose-900 tracking-tight">{feature.text}</span>
                     </div>
                   ))}
                 </div>
@@ -470,13 +489,13 @@ const ProductDetailModal = ({
               <div className="space-y-6 mt-auto">
                 {/* Options Selector */}
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase tracking-widest text-white/40 ml-1">Select Size / Option</label>
+                  <label className="text-[10px] uppercase tracking-widest text-rose-900/40 ml-1">Select Size / Option</label>
                   <div className="grid grid-cols-1 gap-2">
                     {product.options.map((opt) => (
                       <button
                         key={opt.label}
                         onClick={() => setSelectedOption(opt)}
-                        className={`flex justify-between items-center px-6 py-3 rounded-xl border transition-all duration-300 ${selectedOption.label === opt.label ? 'bg-gold/10 border-gold text-white' : 'bg-white/5 border-white/10 text-white/60 hover:border-white/30'}`}
+                        className={`flex justify-between items-center px-6 py-3 rounded-xl border transition-all duration-300 ${selectedOption.label === opt.label ? 'bg-gold/10 border-gold text-rose-900' : 'bg-white/40 border-rose-100 text-rose-900/60 hover:border-rose-300'}`}
                       >
                         <span className="text-xs uppercase tracking-widest">{opt.label}</span>
                         <span className="text-gold font-serif">₹{opt.price.toLocaleString()}</span>
@@ -487,8 +506,8 @@ const ProductDetailModal = ({
 
                 {/* Reference Photo */}
                 <div className="space-y-3">
-                  <label className="text-[10px] uppercase tracking-widest text-white/40 ml-1">Add Reference Photo (Optional)</label>
-                  <label className={`flex items-center justify-center gap-3 w-full border rounded-xl py-4 text-xs uppercase tracking-widest cursor-pointer transition-all duration-300 ${referencePhoto ? 'bg-gold/10 border-gold text-gold' : 'bg-white/5 border-white/10 text-white/40 hover:border-gold/50'}`}>
+                  <label className="text-[10px] uppercase tracking-widest text-rose-900/40 ml-1">Add Reference Photo (Optional)</label>
+                  <label className={`flex items-center justify-center gap-3 w-full border rounded-xl py-4 text-xs uppercase tracking-widest cursor-pointer transition-all duration-300 ${referencePhoto ? 'bg-gold/10 border-gold text-gold' : 'bg-white/40 border-rose-100 text-rose-900/40 hover:border-gold/50'}`}>
                     <Camera size={18} className={referencePhoto ? 'animate-pulse' : ''} />
                     <span className="truncate max-w-[200px]">
                       {referencePhoto ? referencePhoto.name : 'Upload Image'}
@@ -503,38 +522,38 @@ const ProductDetailModal = ({
                 </div>
 
                 {/* Customization Fields */}
-                <div className="mt-8 p-6 bg-white rounded-xl shadow-xl border border-gray-100">
+                <div className="mt-8 p-6 bg-white/60 backdrop-blur-md rounded-xl shadow-xl border border-rose-100">
                   <div className="text-center mb-6">
-                    <h3 className="text-2xl font-serif text-gray-900 mb-1">Place Customised order</h3>
-                    <p className="text-xs text-gray-500 font-medium">Fill Below Details Which will be used during product making</p>
+                    <h3 className="text-2xl font-serif text-rose-900 mb-1">Place Customised order</h3>
+                    <p className="text-xs text-rose-900/60 font-medium">Fill Below Details Which will be used during product making</p>
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-gray-700 ml-1">Event Date (Optional)</label>
+                      <label className="text-xs font-bold text-rose-900/70 ml-1">Event Date (Optional)</label>
                       <input 
                         type="date" 
-                        className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:border-[#E91E63] focus:ring-1 focus:ring-[#E91E63] outline-none transition-all text-gray-900"
+                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-4 py-3 text-sm focus:border-gold outline-none transition-all text-rose-900"
                         value={eventDate}
                         onChange={(e) => setEventDate(e.target.value)}
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-gray-700 ml-1">Bride Name (Optional)</label>
+                      <label className="text-xs font-bold text-rose-900/70 ml-1">Bride Name (Optional)</label>
                       <input 
                         type="text" 
                         placeholder="Bride Name"
-                        className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:border-[#E91E63] focus:ring-1 focus:ring-[#E91E63] outline-none transition-all text-gray-900"
+                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-4 py-3 text-sm focus:border-gold outline-none transition-all text-rose-900 placeholder:text-rose-900/30"
                         value={brideName}
                         onChange={(e) => setBrideName(e.target.value)}
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-bold text-gray-700 ml-1">Groom Name (Optional)</label>
+                      <label className="text-xs font-bold text-rose-900/70 ml-1">Groom Name (Optional)</label>
                       <input 
                         type="text" 
                         placeholder="Groom Name"
-                        className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:border-[#E91E63] focus:ring-1 focus:ring-[#E91E63] outline-none transition-all text-gray-900"
+                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-4 py-3 text-sm focus:border-gold outline-none transition-all text-rose-900 placeholder:text-rose-900/30"
                         value={groomName}
                         onChange={(e) => setGroomName(e.target.value)}
                       />
@@ -549,7 +568,7 @@ const ProductDetailModal = ({
                       onAddToCart(item);
                       onClose();
                     }}
-                    className="bg-white/5 border border-gold/30 text-gold py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold hover:text-dark-bg transition-all duration-500"
+                    className="bg-white/40 border border-gold/30 text-gold py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold hover:text-white transition-all duration-500"
                   >
                     Add to Cart
                   </button>
@@ -558,7 +577,7 @@ const ProductDetailModal = ({
                       onBuyNow(item);
                       onClose();
                     }}
-                    className="bg-gold text-dark-bg py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold-light transition-all duration-500"
+                    className="bg-gold text-white py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold-light transition-all duration-500"
                   >
                     Buy Now
                   </button>
@@ -633,17 +652,17 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="absolute inset-0 bg-black/80 backdrop-blur-md"
+          className="absolute inset-0 bg-rose-900/20 backdrop-blur-md"
         />
         <motion.div 
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="relative bg-dark-surface border border-white/10 w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl"
+          className="relative bg-dark-surface border border-rose-200/50 w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl"
         >
           {step === 'details' ? (
             <div className="grid md:grid-cols-2 max-h-[90vh] overflow-y-auto md:max-h-none">
-              <div className="p-6 md:p-8 border-b md:border-b-0 md:border-r border-white/5 bg-white/[0.02]">
+              <div className="p-6 md:p-8 border-b md:border-b-0 md:border-r border-rose-100 bg-white/20">
                 <h2 className="text-xl md:text-2xl font-serif mb-6 text-gold">
                   Order Summary
                 </h2>
@@ -652,33 +671,33 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                     <div key={item.id} className="flex gap-4 items-center">
                       <img src={item.image} alt={item.name} className="w-10 h-10 md:w-12 md:h-12 rounded-lg object-cover" />
                       <div className="flex-1">
-                        <h4 className="text-xs md:text-sm font-medium">{item.name}</h4>
-                        <p className="text-[9px] md:text-[10px] text-white/40">{item.optionLabel} x {item.quantity}</p>
+                        <h4 className="text-xs md:text-sm font-medium text-rose-900">{item.name}</h4>
+                        <p className="text-[9px] md:text-[10px] text-rose-900/40">{item.optionLabel} x {item.quantity}</p>
                       </div>
-                      <div className="text-xs md:text-sm">₹{(item.price * item.quantity).toLocaleString()}</div>
+                      <div className="text-xs md:text-sm text-rose-900">₹{(item.price * item.quantity).toLocaleString()}</div>
                     </div>
                   ))}
                 </div>
-                <div className="mt-6 md:mt-8 pt-6 border-t border-white/10">
-                  <div className="flex justify-between text-lg md:text-xl font-serif">
+                <div className="mt-6 md:mt-8 pt-6 border-t border-rose-100">
+                  <div className="flex justify-between text-lg md:text-xl font-serif text-rose-900">
                     <span>Total</span>
                     <span className="text-gold">₹{total.toLocaleString()}</span>
                   </div>
-                  <p className="text-[9px] md:text-[10px] text-white/30 mt-2 italic">* 60% advance required to lock schedule as per Blushful Policies.</p>
+                  <p className="text-[9px] md:text-[10px] text-rose-900/30 mt-2 italic">* 60% advance required to lock schedule as per Blushful Policies.</p>
                 </div>
               </div>
               
               <div className="p-6 md:p-8">
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-xl md:text-2xl font-serif">Shipping Details</h2>
-                  <button onClick={onClose} className="text-white/40 hover:text-white"><X size={20} /></button>
+                  <h2 className="text-xl md:text-2xl font-serif text-rose-900">Shipping Details</h2>
+                  <button onClick={onClose} className="text-rose-900/40 hover:text-rose-900"><X size={20} /></button>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <input 
                     required
                     type="text" 
                     placeholder="Full Name" 
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors"
+                    className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                   />
@@ -687,7 +706,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       required
                       type="email" 
                       placeholder="Email" 
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors"
+                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
                     />
@@ -695,7 +714,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       required
                       type="tel" 
                       placeholder="Phone" 
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors"
+                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
                     />
@@ -704,7 +723,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                     required
                     placeholder="Full Address" 
                     rows={3}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors resize-none"
+                    className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors resize-none text-rose-900 placeholder:text-rose-900/30"
                     value={formData.address}
                     onChange={(e) => setFormData({...formData, address: e.target.value})}
                   />
@@ -713,7 +732,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       required
                       type="text" 
                       placeholder="City" 
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors"
+                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30"
                       value={formData.city}
                       onChange={(e) => setFormData({...formData, city: e.target.value})}
                     />
@@ -721,14 +740,14 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       required
                       type="text" 
                       placeholder="Pincode" 
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors"
+                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30"
                       value={formData.pincode}
                       onChange={(e) => setFormData({...formData, pincode: e.target.value})}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2">Reference Photo (Optional)</label>
+                    <label className="text-[10px] uppercase tracking-widest text-rose-900/40 ml-2">Reference Photo (Optional)</label>
                     <div className="relative group/file">
                       <input 
                         type="file" 
@@ -742,12 +761,12 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       />
                       <label 
                         htmlFor="ref-photo"
-                        className="flex items-center gap-3 w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm cursor-pointer hover:border-gold transition-colors"
+                        className="flex items-center gap-3 w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm cursor-pointer hover:border-gold transition-colors"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gold">
+                        <div className="w-8 h-8 rounded-lg bg-rose-100/50 flex items-center justify-center text-gold">
                           <Camera size={16} />
                         </div>
-                        <span className="text-white/60 flex-1 truncate">
+                        <span className="text-rose-900/60 flex-1 truncate">
                           {formData.referencePhoto ? formData.referencePhoto.name : 'Upload reference photo...'}
                         </span>
                         {formData.referencePhoto && (
@@ -757,7 +776,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                               e.preventDefault();
                               setFormData({...formData, referencePhoto: null});
                             }}
-                            className="text-white/40 hover:text-red-500"
+                            className="text-rose-900/40 hover:text-red-500"
                           >
                             <X size={16} />
                           </button>
@@ -768,7 +787,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       <motion.div 
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="mt-2 relative w-20 h-20 rounded-lg overflow-hidden border border-white/10"
+                        className="mt-2 relative w-20 h-20 rounded-lg overflow-hidden border border-rose-100"
                       >
                         <img 
                           src={React.useMemo(() => formData.referencePhoto ? URL.createObjectURL(formData.referencePhoto) : '', [formData.referencePhoto])} 
@@ -780,7 +799,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                     )}
                   </div>
 
-                  <button type="submit" className="w-full bg-gold text-dark-bg py-4 rounded-xl font-bold hover:bg-gold-light transition-all duration-300 uppercase tracking-widest text-sm mt-4">
+                  <button type="submit" className="w-full bg-gold text-white py-4 rounded-xl font-bold hover:bg-gold-light transition-all duration-300 uppercase tracking-widest text-sm mt-4">
                     Confirm Order via WhatsApp
                   </button>
                 </form>
@@ -791,13 +810,13 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
               <div className="w-16 h-16 md:w-20 md:h-20 bg-gold/20 rounded-full flex items-center justify-center mx-auto">
                 <Heart className="text-gold" size={32} md:size={40} fill="currentColor" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif">Order Received!</h2>
-              <p className="text-white/60 text-sm md:text-base max-w-md mx-auto leading-relaxed">
-                Thank you for trusting BlushfulGifts with your treasured memories. Your order details have been transferred to our artisan at <span className="text-white">+91 8882678712</span>. We will contact you shortly for the next steps! ✨
+              <h2 className="text-3xl md:text-4xl font-serif text-rose-900">Order Received!</h2>
+              <p className="text-rose-900/60 text-sm md:text-base max-w-md mx-auto leading-relaxed">
+                Thank you for trusting BlushfulGifts with your treasured memories. Your order details have been transferred to our artisan at <span className="text-rose-900 font-bold">+91 8882678712</span>. We will contact you shortly for the next steps! ✨
               </p>
               <button 
                 onClick={onClose}
-                className="bg-gold text-dark-bg px-8 md:px-12 py-3 md:py-4 rounded-full font-bold hover:bg-gold-light transition-all uppercase tracking-widest text-xs md:text-sm"
+                className="bg-gold text-white px-8 md:px-12 py-3 md:py-4 rounded-full font-bold hover:bg-gold-light transition-all uppercase tracking-widest text-xs md:text-sm"
               >
                 Continue Shopping
               </button>
@@ -828,7 +847,7 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onChec
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"
+            className="fixed inset-0 bg-rose-900/20 backdrop-blur-sm z-[60]"
           />
           <motion.div 
             initial={{ x: '100%' }}
@@ -836,14 +855,14 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onChec
             exit={{ x: '100%' }}
             className="fixed right-0 top-0 h-full w-full max-w-md bg-dark-surface z-[70] shadow-2xl flex flex-col"
           >
-            <div className="p-6 border-b border-white/10 flex justify-between items-center">
-              <h2 className="text-xl font-serif">Your Cart</h2>
-              <button onClick={onClose} className="hover:text-gold transition-colors"><X /></button>
+            <div className="p-6 border-b border-rose-100 flex justify-between items-center">
+              <h2 className="text-xl font-serif text-rose-900">Your Cart</h2>
+              <button onClick={onClose} className="text-rose-900/60 hover:text-gold transition-colors"><X /></button>
             </div>
             
             <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
               {items.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-white/40 space-y-4">
+                <div className="h-full flex flex-col items-center justify-center text-rose-900/40 space-y-4">
                   <ShoppingBag size={48} />
                   <p>Your cart is empty</p>
                   <button onClick={onClose} className="text-gold underline">Start Shopping</button>
@@ -851,48 +870,48 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onChec
               ) : (
                 items.map((item) => (
                   <div key={item.id} className="flex gap-4">
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden flex-shrink-0 border border-rose-100">
                       <img src={item.image} alt={item.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-sm font-medium flex items-center gap-2">
+                      <h4 className="text-sm font-medium flex items-center gap-2 text-rose-900">
                         {item.name}
                         {item.referencePhoto && <Camera size={12} className="text-gold animate-pulse" />}
                       </h4>
-                      <p className="text-[10px] md:text-xs text-white/40 mb-2">
+                      <p className="text-[10px] md:text-xs text-rose-900/40 mb-2">
                         {item.optionLabel}
                         {item.referencePhoto && <span className="ml-2 text-gold/60 italic">(Photo attached)</span>}
                       </p>
                       <div className="flex justify-between items-center">
-                        <div className="flex items-center border border-white/10 rounded-md">
-                          <button onClick={() => onUpdateQuantity(item.id, -1)} className="px-3 py-1.5 hover:text-gold">-</button>
-                          <span className="px-2 text-sm">{item.quantity}</span>
-                          <button onClick={() => onUpdateQuantity(item.id, 1)} className="px-3 py-1.5 hover:text-gold">+</button>
+                        <div className="flex items-center border border-rose-200 rounded-md">
+                          <button onClick={() => onUpdateQuantity(item.id, -1)} className="px-3 py-1.5 text-rose-900/60 hover:text-gold">-</button>
+                          <span className="px-2 text-sm text-rose-900">{item.quantity}</span>
+                          <button onClick={() => onUpdateQuantity(item.id, 1)} className="px-3 py-1.5 text-rose-900/60 hover:text-gold">+</button>
                         </div>
-                        <div className="text-gold text-sm md:text-base">₹{(item.price * item.quantity).toLocaleString()}</div>
+                        <div className="text-gold text-sm md:text-base font-serif">₹{(item.price * item.quantity).toLocaleString()}</div>
                       </div>
                     </div>
-                    <button onClick={() => onRemove(item.id)} className="text-white/20 hover:text-red-500 p-1"><X size={16} /></button>
+                    <button onClick={() => onRemove(item.id)} className="text-rose-900/20 hover:text-red-500 p-1"><X size={16} /></button>
                   </div>
                 ))
               )}
             </div>
 
             {items.length > 0 && (
-              <div className="p-6 border-t border-white/10 space-y-4">
-                <div className="flex justify-between text-lg font-serif">
+              <div className="p-6 border-t border-rose-100 space-y-4">
+                <div className="flex justify-between text-lg font-serif text-rose-900">
                   <span>Total</span>
                   <span className="text-gold">₹{total.toLocaleString()}</span>
                 </div>
                 <button 
                   onClick={onCheckout}
-                  className="w-full bg-gold text-dark-bg py-4 rounded-xl font-bold hover:bg-gold-light transition-colors uppercase tracking-widest block"
+                  className="w-full bg-gold text-white py-4 rounded-xl font-bold hover:bg-gold-light transition-colors uppercase tracking-widest block"
                 >
                   Secure Checkout
                 </button>
-                <div className="flex justify-center gap-4 opacity-40">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Razorpay_logo.svg" alt="Razorpay" className="h-4 invert" />
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo.png" alt="UPI" className="h-4 invert" />
+                <div className="flex justify-center gap-4 opacity-40 grayscale">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Razorpay_logo.svg" alt="Razorpay" className="h-4" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo.png" alt="UPI" className="h-4" />
                 </div>
               </div>
             )}
@@ -957,17 +976,18 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen selection:bg-gold selection:text-dark-bg relative">
+    <div className="min-h-screen selection:bg-gold selection:text-white relative">
       {/* Fairy Bokeh Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="bokeh w-64 h-64 bg-fairy-purple/30 top-1/4 -left-32" />
-        <div className="bokeh w-96 h-96 bg-fairy-pink/20 bottom-1/4 -right-48" style={{ animationDelay: '-2s' }} />
-        <div className="bokeh w-72 h-72 bg-fairy-pink/25 top-1/2 left-1/4" style={{ animationDelay: '-8s' }} />
-        <div className="bokeh w-48 h-48 bg-gold/15 top-3/4 left-1/2" style={{ animationDelay: '-5s' }} />
-        <div className="bokeh w-80 h-80 bg-fairy-pink/20 top-0 right-1/4" style={{ animationDelay: '-12s' }} />
-        <div className="bokeh w-56 h-56 bg-fairy-purple/15 bottom-0 left-1/3" style={{ animationDelay: '-15s' }} />
-        <div className="bokeh w-64 h-64 bg-white/10 top-1/3 right-1/3" style={{ animationDelay: '-10s' }} />
+        <div className="bokeh w-64 h-64 bg-fairy-purple/40 top-1/4 -left-32" />
+        <div className="bokeh w-96 h-96 bg-fairy-pink/30 bottom-1/4 -right-48" style={{ animationDelay: '-2s' }} />
+        <div className="bokeh w-72 h-72 bg-fairy-pink/35 top-1/2 left-1/4" style={{ animationDelay: '-8s' }} />
+        <div className="bokeh w-48 h-48 bg-gold/20 top-3/4 left-1/2" style={{ animationDelay: '-5s' }} />
+        <div className="bokeh w-80 h-80 bg-fairy-pink/30 top-0 right-1/4" style={{ animationDelay: '-12s' }} />
+        <div className="bokeh w-56 h-56 bg-fairy-purple/25 bottom-0 left-1/3" style={{ animationDelay: '-15s' }} />
+        <div className="bokeh w-64 h-64 bg-white/20 top-1/3 right-1/3" style={{ animationDelay: '-10s' }} />
         <div className="absolute inset-0 fairy-dust" />
+        <Sparkles />
       </div>
 
 
@@ -976,7 +996,7 @@ export default function App() {
       {/* Latest Arrivals Section */}
       <section id="shop" className="pt-32 md:pt-48 pb-16 md:pb-32 px-6 max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12 md:mb-24">
-          <h2 className="text-3xl md:text-6xl mb-4 md:mb-6 font-decorative tracking-wide text-glow">Our Collections</h2>
+          <h2 className="text-3xl md:text-6xl mb-4 md:mb-6 font-decorative tracking-wide text-glow text-rose-900">Our Collections</h2>
           <div className="w-16 md:w-24 h-px bg-gold/30 mx-auto glow-gold mb-12" />
           
           {/* Category Navigation Bar */}
@@ -985,7 +1005,7 @@ export default function App() {
               <a 
                 key={category} 
                 href={`#${category.toLowerCase().replace(/\s+/g, '-')}`}
-                className="px-6 py-2 rounded-full border border-white/10 bg-white/5 text-[10px] uppercase tracking-widest font-bold hover:border-gold hover:text-gold transition-all duration-300"
+                className="px-6 py-2 rounded-full border border-rose-200 bg-white/40 text-[10px] uppercase tracking-widest font-bold text-rose-900 hover:border-gold hover:text-gold transition-all duration-300 shadow-sm"
               >
                 {category}
               </a>
@@ -1015,7 +1035,7 @@ export default function App() {
       </section>
 
       {/* Welcome Section (Split Layout) */}
-      <section id="about" className="py-16 md:py-32 relative overflow-hidden bg-dark-bg z-10">
+      <section id="about" className="py-16 md:py-32 relative overflow-hidden z-10">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 md:gap-24 items-center">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
@@ -1023,13 +1043,13 @@ export default function App() {
             viewport={{ once: true }}
             className="space-y-6 md:space-y-10 text-center md:text-left"
           >
-            <h2 className="text-3xl md:text-6xl leading-tight font-decorative">Welcome to the <br/><span className="text-white">BlushfulGifts</span></h2>
-            <p className="text-white/50 text-base md:text-lg font-light leading-relaxed max-w-lg mx-auto md:mx-0">
+            <h2 className="text-3xl md:text-6xl leading-tight font-decorative text-rose-900">Welcome to the <br/><span className="text-rose-800">BlushfulGifts</span></h2>
+            <p className="text-rose-900/60 text-base md:text-lg font-light leading-relaxed max-w-lg mx-auto md:mx-0">
               Step into a world of enchantment and magic, where your most <span className="text-gold">Treasured</span> memories are kept <span className="text-gold">Snug</span> and safe. At BlushfulGifts, we create <span className="text-gold">Heartfelt</span> treasures with <span className="text-gold">Express</span> speed, ensuring your love story <span className="text-gold">Twinkles</span> <span className="text-gold">Forever</span>. ✨
             </p>
             <a href="#why-us" className="inline-block">
-              <button className="group relative px-8 md:px-10 py-3 md:py-4 overflow-hidden border border-white/20 transition-all hover:border-gold">
-                <span className="relative z-10 text-[10px] md:text-xs uppercase tracking-[0.3em] group-hover:text-dark-bg transition-colors">More About Us</span>
+              <button className="group relative px-8 md:px-10 py-3 md:py-4 overflow-hidden border border-rose-200 transition-all hover:border-gold">
+                <span className="relative z-10 text-[10px] md:text-xs uppercase tracking-[0.3em] text-rose-900 group-hover:text-white transition-colors">More About Us</span>
                 <div className="absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               </button>
             </a>
@@ -1042,24 +1062,24 @@ export default function App() {
             className="relative"
           >
             {/* Memories Effect Background */}
-            <div className="absolute -inset-10 bg-purple-500/10 blur-[100px] rounded-full animate-pulse" />
-            <div className="relative rounded-sm overflow-hidden aspect-[4/5] border border-white/5">
+            <div className="absolute -inset-10 bg-rose-300/20 blur-[100px] rounded-full animate-pulse" />
+            <div className="relative rounded-sm overflow-hidden aspect-[4/5] border border-rose-100 shadow-2xl">
               <img 
                 src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80" 
                 alt="Ethereal Portrait" 
-                className="w-full h-full object-cover opacity-80"
+                className="w-full h-full object-cover opacity-90"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark-bg via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-bg/60 via-transparent to-transparent" />
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Browse by Collections */}
-      <section className="py-16 md:py-32 px-6 max-w-7xl mx-auto border-t border-white/5 relative z-10">
+      <section className="py-16 md:py-32 px-6 max-w-7xl mx-auto border-t border-rose-100 relative z-10">
         <div className="text-center mb-12 md:mb-24">
-          <h2 className="text-3xl md:text-6xl font-decorative">Browse by Collections</h2>
+          <h2 className="text-3xl md:text-6xl font-decorative text-rose-900">Browse by Collections</h2>
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
@@ -1071,17 +1091,17 @@ export default function App() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
               viewport={{ once: true }}
-              className="group relative aspect-video rounded-sm overflow-hidden cursor-pointer border border-white/5"
+              className="group relative aspect-video rounded-sm overflow-hidden cursor-pointer border border-rose-100 shadow-xl"
             >
               <img 
                 src={i === 2 ? "https://i.pinimg.com/736x/75/c2/ad/75c2ad51d2cf34b10f60560baaf577fd.jpg" : `https://picsum.photos/seed/coll${i}/800/600`} 
                 alt={cat} 
-                className="w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-1000"
+                className="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-1000"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
+              <div className="absolute inset-0 bg-rose-900/20 group-hover:bg-rose-900/10 transition-colors" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <h3 className="text-2xl tracking-widest uppercase font-decorative text-white group-hover:scale-110 transition-transform">{cat}</h3>
+                <h3 className="text-2xl tracking-widest uppercase font-decorative text-white text-glow group-hover:scale-110 transition-transform">{cat}</h3>
               </div>
             </motion.a>
           ))}
@@ -1089,8 +1109,8 @@ export default function App() {
       </section>
 
       {/* Why Choose Us */}
-      <section id="why-us" className="py-16 md:py-32 bg-dark-bg relative overflow-hidden">
-        <div className="absolute inset-0 nebula-bg opacity-50" />
+      <section id="why-us" className="py-16 md:py-32 relative overflow-hidden z-10">
+        <div className="absolute inset-0 nebula-bg opacity-40" />
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12">
             {[
@@ -1108,10 +1128,10 @@ export default function App() {
                 viewport={{ once: true }}
                 className="text-center space-y-6 group"
               >
-                <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mx-auto group-hover:glow-gold transition-all duration-700">
+                <div className="w-20 h-20 rounded-full bg-white/40 border border-rose-100 flex items-center justify-center mx-auto group-hover:glow-gold transition-all duration-700 shadow-sm">
                   {item.icon}
                 </div>
-                <h4 className="text-[10px] uppercase tracking-[0.3em] font-medium text-white/40 group-hover:text-gold transition-colors">{item.title}</h4>
+                <h4 className="text-[10px] uppercase tracking-[0.3em] font-medium text-rose-900/40 group-hover:text-gold transition-colors">{item.title}</h4>
               </motion.div>
             ))}
           </div>
@@ -1119,10 +1139,10 @@ export default function App() {
       </section>
 
       {/* Blushful Policies Section */}
-      <section id="policies" className="py-16 md:py-32 px-6 max-w-7xl mx-auto border-t border-white/5 relative z-10">
+      <section id="policies" className="py-16 md:py-32 px-6 max-w-7xl mx-auto border-t border-rose-100 relative z-10">
         <div className="text-center mb-12 md:mb-24">
-          <h2 className="text-3xl md:text-6xl font-decorative">Blushful Policies 🌸</h2>
-          <p className="text-white/40 uppercase tracking-widest text-[10px] md:text-xs mt-4">Transparent & Adorable</p>
+          <h2 className="text-3xl md:text-6xl font-decorative text-rose-900">Blushful Policies 🌸</h2>
+          <p className="text-rose-900/40 uppercase tracking-widest text-[10px] md:text-xs mt-4">Transparent & Adorable</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
@@ -1134,9 +1154,9 @@ export default function App() {
             { q: "Do you offer refunds?", a: "As each piece is a custom-made memory, we don't offer refunds. However, if there’s any issue, we will make it right for you immediately! Forever yours. ✨" },
             { q: "Can I visit your workshop?", a: "Currently we're serving online only to maintain our 'Express Magic' flow. You can see our 'Behind the Scenes' on our Reels! ⏳" }
           ].map((policy, i) => (
-            <div key={i} className="p-8 rounded-sm border border-white/5 bg-white/[0.01]">
+            <div key={i} className="p-8 rounded-sm border border-rose-100 bg-white/40 shadow-sm">
               <h4 className="text-gold font-serif text-xl mb-4">{policy.q}</h4>
-              <p className="text-white/50 font-light leading-relaxed">{policy.a}</p>
+              <p className="text-rose-900/60 font-light leading-relaxed">{policy.a}</p>
             </div>
           ))}
         </div>
@@ -1145,7 +1165,7 @@ export default function App() {
       {/* Testimonials */}
       <section className="py-16 md:py-32 px-6 max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-12 md:mb-24">
-          <h2 className="text-3xl md:text-6xl mb-4 md:mb-6 font-decorative">Client Stories</h2>
+          <h2 className="text-3xl md:text-6xl mb-4 md:mb-6 font-decorative text-rose-900">Client Stories</h2>
           <div className="flex justify-center gap-2 text-gold/40">
             {[...Array(5)].map((_, i) => <Star key={i} size={12} md:size={14} fill="currentColor" />)}
           </div>
@@ -1159,10 +1179,10 @@ export default function App() {
           ].map((t, i) => (
             <motion.div 
               key={i}
-              className="p-10 rounded-sm border border-white/5 bg-white/[0.02] relative group hover:border-gold/20 transition-colors"
+              className="p-10 rounded-sm border border-rose-100 bg-white/40 relative group hover:border-gold/20 transition-colors shadow-sm"
             >
               <div className="text-gold text-5xl font-serif absolute top-6 left-8 opacity-10 group-hover:opacity-20 transition-opacity">“</div>
-              <p className="text-white/50 italic mb-8 relative z-10 leading-relaxed text-lg">
+              <p className="text-rose-900/60 italic mb-8 relative z-10 leading-relaxed text-lg">
                 {t.text}
               </p>
               <div className="font-decorative text-gold text-sm tracking-widest">— {t.name}</div>
@@ -1172,22 +1192,22 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="bg-dark-bg border-t border-white/5 pt-16 md:pt-32 pb-16 px-6 relative overflow-hidden">
+      <footer id="contact" className="border-t border-rose-100 pt-16 md:pt-32 pb-16 px-6 relative overflow-hidden z-10">
         <div className="absolute bottom-0 left-0 w-full h-1/2 nebula-bg opacity-30" />
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-20 mb-16 md:mb-32 relative z-10">
           <div className="space-y-6 md:space-y-8 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-4">
               <img src={BRAND_LOGO} alt="Logo" className="w-12 h-12 rounded-full border border-gold/30 object-cover shadow-lg" referrerPolicy="no-referrer" />
-              <div className="text-2xl md:text-3xl font-decorative tracking-widest text-white text-glow">BlushfulGifts</div>
+              <div className="text-2xl md:text-3xl font-decorative tracking-widest text-rose-900 text-glow">BlushfulGifts</div>
             </div>
-            <p className="text-white/30 text-xs md:text-sm leading-relaxed font-light">
+            <p className="text-rose-900/40 text-xs md:text-sm leading-relaxed font-light">
               Preserving your most cherished wedding memories through the art of high-end resin preservation. Handcrafted with magic in every detail.
             </p>
             <div className="flex justify-center md:justify-start gap-6">
-              <a href="https://www.instagram.com/blushfulgifts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-gold transition-all">
+              <a href="https://www.instagram.com/blushfulgifts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="text-rose-900/40 hover:text-gold transition-all">
                 <Instagram size={20} />
               </a>
-              <a href="https://wa.me/918882678712" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-gold transition-all">
+              <a href="https://wa.me/918882678712" target="_blank" rel="noopener noreferrer" className="text-rose-900/40 hover:text-gold transition-all">
                 <MessageCircle size={20} />
               </a>
             </div>
@@ -1195,7 +1215,7 @@ export default function App() {
           
           <div className="text-center md:text-left">
             <h4 className="text-gold uppercase tracking-widest text-xs font-bold mb-6 md:mb-8">Quick Links</h4>
-            <ul className="space-y-4 text-sm text-white/60">
+            <ul className="space-y-4 text-sm text-rose-900/60">
               <li><a href="#shop" className="hover:text-gold transition-colors">Collections</a></li>
               <li><a href="#why-us" className="hover:text-gold transition-colors">Our Process</a></li>
               <li><a href="#policies" className="hover:text-gold transition-colors">Care Instructions</a></li>
@@ -1204,7 +1224,7 @@ export default function App() {
           
           <div className="text-center md:text-left">
             <h4 className="text-gold uppercase tracking-widest text-xs font-bold mb-6 md:mb-8">Support</h4>
-            <ul className="space-y-4 text-sm text-white/60">
+            <ul className="space-y-4 text-sm text-rose-900/60">
               <li><a href="#policies" className="hover:text-gold transition-colors">FAQ</a></li>
               <li><a href="#policies" className="hover:text-gold transition-colors">Shipping & Returns</a></li>
               <li><a href="#policies" className="hover:text-gold transition-colors">Privacy Policy</a></li>
@@ -1214,7 +1234,7 @@ export default function App() {
           
           <div className="text-center md:text-left">
             <h4 className="text-gold uppercase tracking-widest text-xs font-bold mb-6 md:mb-8">Contact Us</h4>
-            <ul className="space-y-4 text-sm text-white/60">
+            <ul className="space-y-4 text-sm text-rose-900/60">
               <li>omkarathakur763@gmail.com</li>
               <li>+91 8882678712</li>
               <li>Based in India</li>
@@ -1223,7 +1243,7 @@ export default function App() {
           </div>
         </div>
         
-        <div className="max-w-7xl mx-auto pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] uppercase tracking-widest text-white/20">
+        <div className="max-w-7xl mx-auto pt-12 border-t border-rose-100 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] uppercase tracking-widest text-rose-900/20">
           <div>© 2024 BlushfulGifts. Building the Heartbeat of Gifting, from the Heart. 🌸</div>
           <div className="flex gap-8">
             <span>Sending you hearts, Blushfulgifts Team ✨</span>
@@ -1273,7 +1293,7 @@ export default function App() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             onClick={scrollToTop}
-            className="fixed bottom-28 right-8 w-12 h-12 bg-white/5 backdrop-blur-md border border-white/10 text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-gold hover:text-dark-bg transition-all z-50"
+            className="fixed bottom-28 right-8 w-12 h-12 bg-white/40 backdrop-blur-md border border-rose-200 text-rose-900 rounded-full flex items-center justify-center shadow-2xl hover:bg-gold hover:text-white transition-all z-50"
           >
             <ChevronUp size={24} />
           </motion.button>
