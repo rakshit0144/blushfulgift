@@ -1,4 +1,4 @@
-import { ShoppingBag, Heart, Menu, X, Instagram, MessageCircle, Star, ShieldCheck, Truck, Package, Droplets, Clock, ChevronUp, Camera } from 'lucide-react';
+import { ShoppingBag, Heart, Menu, X, Instagram, MessageCircle, Star, ShieldCheck, Truck, Package, Droplets, Clock, ChevronUp, Camera, Home, Phone, CircleSlash, Gem, Video } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import React, { useState, useEffect } from 'react';
 
@@ -28,60 +28,119 @@ interface CartItem {
   quantity: number;
   image: string;
   referencePhoto?: File | null;
+  eventDate?: string;
+  brideName?: string;
+  groomName?: string;
 }
 
 // --- Data ---
 
 const PRODUCTS: Product[] = [
+  // LED Blocks
   {
-    id: 'led-blocks',
-    name: 'Thick Deep LED Blocks',
+    id: 'led-block-8',
+    name: '8 inch Circular LED Block',
     category: 'LED Blocks',
     image: 'https://i.pinimg.com/736x/cc/45/8b/cc458b9afd29371266f96bd1f52f2c4f.jpg',
-    options: [
-      { label: 'Circular 8 inch With LED', price: 3499 },
-    ],
-    note: 'Other shapes available. A Snug home for your flowers. 🌸'
+    options: [{ label: 'Standard', price: 3499 }],
+    note: 'A Snug home for your flowers. 🌸'
   },
+  // Flower Clocks
   {
-    id: 'flower-preservation-clock',
-    name: 'Flowers Preservation Clock',
+    id: 'clock-10',
+    name: '10 inch Flower Clock',
     category: 'Flower Clocks',
     image: 'https://i.pinimg.com/736x/3d/f7/e6/3df7e6755e83413f4cb810544e3f495b.jpg',
     options: [
-      { label: '10 inch Without LED', price: 2999 },
-      { label: '10 inch With LED', price: 3499 },
-      { label: '12 inch Without LED', price: 3499 },
-      { label: '12 inch With LED', price: 3899 },
+      { label: 'Without LED', price: 2999 },
+      { label: 'With LED', price: 3499 },
     ],
-    note: 'More shapes available on demand. Experience our Express Magic! ⏳'
+    note: 'Experience our Express Magic! ⏳'
   },
   {
-    id: 'rectangular-wooden-frame',
-    name: 'Rectangular Wooden Frame',
+    id: 'clock-12',
+    name: '12 inch Flower Clock',
+    category: 'Flower Clocks',
+    image: 'https://i.pinimg.com/736x/3d/f7/e6/3df7e6755e83413f4cb810544e3f495b.jpg',
+    options: [
+      { label: 'Without LED', price: 3499 },
+      { label: 'With LED', price: 3899 },
+    ],
+    note: 'Experience our Express Magic! ⏳'
+  },
+  // Varmala Preservations - Rectangular
+  {
+    id: 'varmala-rect-10x12',
+    name: '10x12 inch Rectangular Frame',
     category: 'Varmala Preservations',
     image: 'https://i.pinimg.com/736x/75/c2/ad/75c2ad51d2cf34b10f60560baaf577fd.jpg',
-    options: [
-      { label: '10x12 inch Rectangular', price: 3500 },
-      { label: '12x15 inch Rectangular', price: 3999 },
-      { label: '15x18 inch Rectangular', price: 4999, highlight: true },
-      { label: '18x24 inch Rectangular', price: 6999 },
-    ],
-    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin with a classic wooden frame. ✨'
+    options: [{ label: 'Standard', price: 3500 }],
+    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin. ✨'
   },
   {
-    id: 'square-wooden-frame',
-    name: 'Square Wooden Frame',
+    id: 'varmala-rect-12x15',
+    name: '12x15 inch Rectangular Frame',
+    category: 'Varmala Preservations',
+    image: 'https://i.pinimg.com/736x/75/c2/ad/75c2ad51d2cf34b10f60560baaf577fd.jpg',
+    options: [{ label: 'Standard', price: 3999 }],
+    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin. ✨'
+  },
+  {
+    id: 'varmala-rect-15x18',
+    name: '15x18 inch Rectangular Frame',
+    category: 'Varmala Preservations',
+    image: 'https://i.pinimg.com/736x/75/c2/ad/75c2ad51d2cf34b10f60560baaf577fd.jpg',
+    options: [{ label: 'Standard', price: 4999 }],
+    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin. ✨'
+  },
+  {
+    id: 'varmala-rect-18x24',
+    name: '18x24 inch Rectangular Frame',
+    category: 'Varmala Preservations',
+    image: 'https://i.pinimg.com/736x/75/c2/ad/75c2ad51d2cf34b10f60560baaf577fd.jpg',
+    options: [{ label: 'Standard', price: 6999 }],
+    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin. ✨'
+  },
+  // Varmala Preservations - Square
+  {
+    id: 'varmala-sq-10x10',
+    name: '10x10 inch Square Frame',
     category: 'Varmala Preservations',
     image: 'https://i.pinimg.com/736x/41/51/30/415130be818e26ef33a801148977bcb9.jpg',
-    options: [
-      { label: '10x10 inch Square', price: 3500 },
-      { label: '12x12 inch Square', price: 3999 },
-      { label: '15x15 inch Square', price: 4999, highlight: true },
-      { label: '18x18 inch Square', price: 6999 },
-      { label: '20x20 inch Square', price: 8999 },
-    ],
-    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin with a modern square wooden frame. ✨'
+    options: [{ label: 'Standard', price: 3500 }],
+    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin. ✨'
+  },
+  {
+    id: 'varmala-sq-12x12',
+    name: '12x12 inch Square Frame',
+    category: 'Varmala Preservations',
+    image: 'https://i.pinimg.com/736x/41/51/30/415130be818e26ef33a801148977bcb9.jpg',
+    options: [{ label: 'Standard', price: 3999 }],
+    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin. ✨'
+  },
+  {
+    id: 'varmala-sq-15x15',
+    name: '15x15 inch Square Frame',
+    category: 'Varmala Preservations',
+    image: 'https://i.pinimg.com/736x/41/51/30/415130be818e26ef33a801148977bcb9.jpg',
+    options: [{ label: 'Standard', price: 4999 }],
+    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin. ✨'
+  },
+  {
+    id: 'varmala-sq-18x18',
+    name: '18x18 inch Square Frame',
+    category: 'Varmala Preservations',
+    image: 'https://i.pinimg.com/736x/41/51/30/415130be818e26ef33a801148977bcb9.jpg',
+    options: [{ label: 'Standard', price: 6999 }],
+    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin. ✨'
+  },
+  {
+    id: 'varmala-sq-20x20',
+    name: '20x20 inch Square Frame',
+    category: 'Varmala Preservations',
+    image: 'https://i.pinimg.com/736x/41/51/30/415130be818e26ef33a801148977bcb9.jpg',
+    options: [{ label: 'Standard', price: 8999 }],
+    note: 'Preserve your sacred Varmala in our premium Eternity-Grade resin. ✨'
   }
 ];
 
@@ -140,7 +199,7 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
                 <a href="https://www.instagram.com/blushfulgifts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
                   <Instagram size={18} />
                 </a>
-                <a href="https://wa.me/917088159329" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
+                <a href="https://wa.me/918882678712" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
                   <MessageCircle size={18} />
                 </a>
               </div>
@@ -212,7 +271,7 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
                   <a href="https://www.instagram.com/blushfulgifts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
                     <Instagram size={24} />
                   </a>
-                  <a href="https://wa.me/917088159329" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
+                  <a href="https://wa.me/918882678712" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
                     <MessageCircle size={24} />
                   </a>
                 </div>
@@ -292,11 +351,17 @@ const ProductDetailModal = ({
 }) => {
   const [selectedOption, setSelectedOption] = useState<ProductOption | null>(null);
   const [referencePhoto, setReferencePhoto] = useState<File | null>(null);
+  const [eventDate, setEventDate] = useState('');
+  const [brideName, setBrideName] = useState('');
+  const [groomName, setGroomName] = useState('');
 
   useEffect(() => {
     if (product) {
       setSelectedOption(product.options[0]);
       setReferencePhoto(null);
+      setEventDate('');
+      setBrideName('');
+      setGroomName('');
     }
   }, [product]);
 
@@ -310,7 +375,10 @@ const ProductDetailModal = ({
     price: selectedOption.price,
     quantity: 1,
     image: product.image,
-    referencePhoto: referencePhoto
+    referencePhoto: referencePhoto,
+    eventDate: eventDate,
+    brideName: brideName,
+    groomName: groomName
   };
 
   return (
@@ -362,6 +430,26 @@ const ProductDetailModal = ({
                     {product.note || "Preserve your most cherished memories in our premium Eternity-Grade resin. Each piece is handcrafted with magic and care to ensure your love story twinkles forever. ✨"}
                   </p>
                 </div>
+
+                {/* Product Features Grid */}
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mt-8">
+                  {[
+                    { icon: <Video size={14} />, text: "Making Video sharing" },
+                    { icon: <Home size={14} />, text: "Home Pick & Drop Facility" },
+                    { icon: <Phone size={14} />, text: "On Call Customization" },
+                    { icon: <Truck size={14} />, text: "7–12 Days Delivery Time" },
+                    { icon: <CircleSlash size={14} />, text: "No Cash on Delivery" },
+                    { icon: <Gem size={14} />, text: "Extra Shine Resin" },
+                  ].map((feature, idx) => (
+                    <div 
+                      key={idx} 
+                      className="flex items-center gap-2 px-3 py-2 border border-[#E91E63] bg-white rounded-md shadow-sm"
+                    >
+                      <span className="text-[#E91E63]">{feature.icon}</span>
+                      <span className="text-[10px] font-semibold text-gray-800 tracking-tight">{feature.text}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div className="space-y-6 mt-auto">
@@ -397,6 +485,46 @@ const ProductDetailModal = ({
                       onChange={(e) => setReferencePhoto(e.target.files?.[0] || null)}
                     />
                   </label>
+                </div>
+
+                {/* Customization Fields */}
+                <div className="mt-8 p-6 bg-white rounded-xl shadow-xl border border-gray-100">
+                  <div className="text-center mb-6">
+                    <h3 className="text-2xl font-serif text-gray-900 mb-1">Place Customised order</h3>
+                    <p className="text-xs text-gray-500 font-medium">Fill Below Details Which will be used during product making</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-gray-700 ml-1">Event Date (Optional)</label>
+                      <input 
+                        type="date" 
+                        className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:border-[#E91E63] focus:ring-1 focus:ring-[#E91E63] outline-none transition-all text-gray-900"
+                        value={eventDate}
+                        onChange={(e) => setEventDate(e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-gray-700 ml-1">Bride Name (Optional)</label>
+                      <input 
+                        type="text" 
+                        placeholder="Bride Name"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:border-[#E91E63] focus:ring-1 focus:ring-[#E91E63] outline-none transition-all text-gray-900"
+                        value={brideName}
+                        onChange={(e) => setBrideName(e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-gray-700 ml-1">Groom Name (Optional)</label>
+                      <input 
+                        type="text" 
+                        placeholder="Groom Name"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm focus:border-[#E91E63] focus:ring-1 focus:ring-[#E91E63] outline-none transition-all text-gray-900"
+                        value={groomName}
+                        onChange={(e) => setGroomName(e.target.value)}
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 {/* Action Buttons */}
@@ -452,7 +580,12 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
     // Format WhatsApp message
     const orderDetails = items.map(item => {
       const photoNote = item.referencePhoto ? ' [Reference Photo Attached]' : '';
-      return `- ${item.name} (${item.optionLabel})${photoNote} x ${item.quantity}: ₹${(item.price * item.quantity).toLocaleString()}`;
+      let customizationDetails = '';
+      if (item.eventDate) customizationDetails += `\n   - Event Date: ${item.eventDate}`;
+      if (item.brideName) customizationDetails += `\n   - Bride: ${item.brideName}`;
+      if (item.groomName) customizationDetails += `\n   - Groom: ${item.groomName}`;
+      
+      return `- ${item.name} (${item.optionLabel})${photoNote} x ${item.quantity}: ₹${(item.price * item.quantity).toLocaleString()}${customizationDetails}`;
     }).join('\n');
 
     const message = `*New Order from BlushfulGifts*\n\n` +
@@ -467,7 +600,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
       `Please confirm the order and share payment details. ✨`;
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/917088159329?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/918882678712?text=${encodedMessage}`;
     
     // Open WhatsApp
     window.open(whatsappUrl, '_blank');
@@ -645,7 +778,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
               </div>
               <h2 className="text-3xl md:text-4xl font-serif">Order Received!</h2>
               <p className="text-white/60 text-sm md:text-base max-w-md mx-auto leading-relaxed">
-                Thank you for trusting BlushfulGifts with your treasured memories. Your order details have been transferred to our artisan at <span className="text-white">+91 7088159329</span>. We will contact you shortly for the next steps! ✨
+                Thank you for trusting BlushfulGifts with your treasured memories. Your order details have been transferred to our artisan at <span className="text-white">+91 8882678712</span>. We will contact you shortly for the next steps! ✨
               </p>
               <button 
                 onClick={onClose}
@@ -826,15 +959,38 @@ export default function App() {
         <div className="text-center mb-12 md:mb-24">
           <h2 className="text-3xl md:text-6xl mb-4 md:mb-6 font-decorative tracking-wide text-glow">Our Collections</h2>
           <div className="w-16 md:w-24 h-px bg-gold/30 mx-auto glow-gold mb-12" />
+          
+          {/* Category Navigation Bar */}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16">
+            {Array.from(new Set(PRODUCTS.map(p => p.category))).map(category => (
+              <a 
+                key={category} 
+                href={`#${category.toLowerCase().replace(/\s+/g, '-')}`}
+                className="px-6 py-2 rounded-full border border-white/10 bg-white/5 text-[10px] uppercase tracking-widest font-bold hover:border-gold hover:text-gold transition-all duration-300"
+              >
+                {category}
+              </a>
+            ))}
+          </div>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
-          {PRODUCTS.map((product) => (
-            <ProductCard 
-              key={product.id} 
-              product={product} 
-              onViewDetails={(p) => setSelectedProduct(p)}
-            />
+        <div className="space-y-24">
+          {Array.from(new Set(PRODUCTS.map(p => p.category))).map(category => (
+            <div key={category} id={category.toLowerCase().replace(/\s+/g, '-')} className="scroll-mt-32">
+              <div className="flex items-center gap-6 mb-12">
+                <h3 className="text-2xl md:text-4xl font-serif text-gold tracking-[0.2em] uppercase whitespace-nowrap">{category}</h3>
+                <div className="h-px bg-gold/20 flex-1" />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+                {PRODUCTS.filter(p => p.category === category).map((product) => (
+                  <ProductCard 
+                    key={product.id} 
+                    product={product} 
+                    onViewDetails={(p) => setSelectedProduct(p)}
+                  />
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </section>
@@ -1009,7 +1165,7 @@ export default function App() {
               <a href="https://www.instagram.com/blushfulgifts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-gold transition-all">
                 <Instagram size={20} />
               </a>
-              <a href="https://wa.me/917088159329" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-gold transition-all">
+              <a href="https://wa.me/918882678712" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-gold transition-all">
                 <MessageCircle size={20} />
               </a>
             </div>
@@ -1038,7 +1194,7 @@ export default function App() {
             <h4 className="text-gold uppercase tracking-widest text-xs font-bold mb-6 md:mb-8">Contact Us</h4>
             <ul className="space-y-4 text-sm text-white/60">
               <li>omkarathakur763@gmail.com</li>
-              <li>+91 7088159329</li>
+              <li>+91 8882678712</li>
               <li>Based in India</li>
               <li>Pan India Shipping</li>
             </ul>
@@ -1055,7 +1211,7 @@ export default function App() {
 
       {/* Floating WhatsApp */}
       <a 
-        href="https://wa.me/917088159329" 
+        href="https://wa.me/918882678712" 
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-8 right-8 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform z-50"
