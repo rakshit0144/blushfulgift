@@ -960,9 +960,13 @@ export default function App() {
     <div className="min-h-screen selection:bg-gold selection:text-dark-bg relative">
       {/* Fairy Bokeh Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="bokeh w-64 h-64 bg-fairy-purple/20 top-1/4 -left-32" />
-        <div className="bokeh w-96 h-96 bg-fairy-pink/10 bottom-1/4 -right-48" style={{ animationDelay: '-2s' }} />
-        <div className="bokeh w-48 h-48 bg-gold/10 top-3/4 left-1/2" style={{ animationDelay: '-5s' }} />
+        <div className="bokeh w-64 h-64 bg-fairy-purple/30 top-1/4 -left-32" />
+        <div className="bokeh w-96 h-96 bg-fairy-pink/20 bottom-1/4 -right-48" style={{ animationDelay: '-2s' }} />
+        <div className="bokeh w-72 h-72 bg-fairy-pink/25 top-1/2 left-1/4" style={{ animationDelay: '-8s' }} />
+        <div className="bokeh w-48 h-48 bg-gold/15 top-3/4 left-1/2" style={{ animationDelay: '-5s' }} />
+        <div className="bokeh w-80 h-80 bg-fairy-pink/20 top-0 right-1/4" style={{ animationDelay: '-12s' }} />
+        <div className="bokeh w-56 h-56 bg-fairy-purple/15 bottom-0 left-1/3" style={{ animationDelay: '-15s' }} />
+        <div className="bokeh w-64 h-64 bg-white/10 top-1/3 right-1/3" style={{ animationDelay: '-10s' }} />
         <div className="absolute inset-0 fairy-dust" />
       </div>
 
