@@ -1,4 +1,4 @@
-import { ShoppingBag, Heart, Menu, X, Instagram, MessageCircle, Star, ShieldCheck, Truck, Package, Droplets, Clock, ChevronUp } from 'lucide-react';
+import { ShoppingBag, Heart, Menu, X, Instagram, MessageCircle, Star, ShieldCheck, Truck, Package, Droplets, Clock, ChevronUp, Camera } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import React, { useState, useEffect } from 'react';
 
@@ -316,7 +316,8 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
     phone: '',
     address: '',
     city: '',
-    pincode: ''
+    pincode: '',
+    referencePhoto: null as File | null
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -330,6 +331,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
       `Email: ${formData.email}\n` +
       `Phone: ${formData.phone}\n` +
       `Address: ${formData.address}, ${formData.city} - ${formData.pincode}\n\n` +
+      `*Reference Photo:* ${formData.referencePhoto ? 'Yes (Will share on WhatsApp)' : 'Not provided'}\n\n` +
       `*Order Summary:*\n${orderDetails}\n\n` +
       `*Total Amount:* ₹${total.toLocaleString()}\n\n` +
       `Please confirm the order and share payment details. ✨`;
@@ -445,6 +447,59 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       value={formData.pincode}
                       onChange={(e) => setFormData({...formData, pincode: e.target.value})}
                     />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] uppercase tracking-widest text-white/40 ml-2">Reference Photo (Optional)</label>
+                    <div className="relative group/file">
+                      <input 
+                        type="file" 
+                        accept="image/*"
+                        className="hidden" 
+                        id="ref-photo"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) setFormData({...formData, referencePhoto: file});
+                        }}
+                      />
+                      <label 
+                        htmlFor="ref-photo"
+                        className="flex items-center gap-3 w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm cursor-pointer hover:border-gold transition-colors"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gold">
+                          <Camera size={16} />
+                        </div>
+                        <span className="text-white/60 flex-1 truncate">
+                          {formData.referencePhoto ? formData.referencePhoto.name : 'Upload reference photo...'}
+                        </span>
+                        {formData.referencePhoto && (
+                          <button 
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setFormData({...formData, referencePhoto: null});
+                            }}
+                            className="text-white/40 hover:text-red-500"
+                          >
+                            <X size={16} />
+                          </button>
+                        )}
+                      </label>
+                    </div>
+                    {formData.referencePhoto && (
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="mt-2 relative w-20 h-20 rounded-lg overflow-hidden border border-white/10"
+                      >
+                        <img 
+                          src={React.useMemo(() => formData.referencePhoto ? URL.createObjectURL(formData.referencePhoto) : '', [formData.referencePhoto])} 
+                          alt="Preview" 
+                          className="w-full h-full object-cover"
+                          onLoad={(e) => URL.revokeObjectURL((e.target as HTMLImageElement).src)}
+                        />
+                      </motion.div>
+                    )}
                   </div>
 
                   <button type="submit" className="w-full bg-gold text-dark-bg py-4 rounded-xl font-bold hover:bg-gold-light transition-all duration-300 uppercase tracking-widest text-sm mt-4">
@@ -704,7 +759,7 @@ export default function App() {
               className="group relative aspect-video rounded-sm overflow-hidden cursor-pointer border border-white/5"
             >
               <img 
-                src={`https://picsum.photos/seed/coll${i}/800/600`} 
+                src={i === 2 ? "https://i.pinimg.com/736x/75/c2/ad/75c2ad51d2cf34b10f60560baaf577fd.jpg" : `https://picsum.photos/seed/coll${i}/800/600`} 
                 alt={cat} 
                 className="w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-1000"
                 referrerPolicy="no-referrer"
