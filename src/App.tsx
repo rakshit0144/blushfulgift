@@ -35,6 +35,8 @@ interface CartItem {
 
 // --- Data ---
 
+const BRAND_LOGO = "https://i.pinimg.com/736x/a2/93/af/a293aff7883276e7111da38b7af1c8ac.jpg";
+
 const PRODUCTS: Product[] = [
   // LED Blocks
   {
@@ -167,34 +169,44 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
       <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-dark-bg/90 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-gradient-to-b from-black/60 to-transparent py-4 md:py-8'}`}>
         <div className="max-w-7xl mx-auto px-6">
           {/* Top Row: Search, Logo, Icons */}
-          <div className="flex justify-between items-center mb-0 md:mb-6">
-            <div className="flex-1 md:hidden">
-              <button 
-                onClick={() => setIsMenuOpen(true)}
-                className="w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:text-gold transition-all active:scale-95 shadow-lg"
-                aria-label="Open Menu"
-              >
-                <Menu size={20} />
-              </button>
-            </div>
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center mb-0 md:mb-6">
+            <div className="flex items-center">
+              <div className="md:hidden">
+                <button 
+                  onClick={() => setIsMenuOpen(true)}
+                  className="w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:text-gold transition-all active:scale-95 shadow-lg"
+                  aria-label="Open Menu"
+                >
+                  <Menu size={20} />
+                </button>
+              </div>
 
-            <div className="flex-1 hidden md:block">
-              <button 
-                onClick={() => setIsMenuOpen(true)}
-                className="w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/5 hover:border-white/20 rounded-full text-white/60 hover:text-gold transition-all"
-                aria-label="Open Menu"
-              >
-                <Menu size={18} />
-              </button>
+              <div className="hidden md:block">
+                <button 
+                  onClick={() => setIsMenuOpen(true)}
+                  className="w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/5 hover:border-white/20 rounded-full text-white/60 hover:text-gold transition-all"
+                  aria-label="Open Menu"
+                >
+                  <Menu size={18} />
+                </button>
+              </div>
             </div>
             
-            <div className="flex-1 text-center">
-              <h1 className="text-2xl md:text-5xl font-decorative tracking-wider md:tracking-widest text-white text-glow whitespace-nowrap">
-                BlushfulGifts
-              </h1>
+            <div className="text-center px-4">
+              <div className="flex items-center justify-center gap-2 md:gap-4">
+                <img 
+                  src={BRAND_LOGO} 
+                  alt="BlushfulGifts Logo" 
+                  className="w-8 h-8 md:w-14 md:h-14 rounded-full border border-gold/30 shadow-lg object-cover flex-shrink-0" 
+                  referrerPolicy="no-referrer" 
+                />
+                <h1 className="text-xl sm:text-2xl md:text-5xl font-decorative tracking-wider md:tracking-widest text-white text-glow whitespace-nowrap">
+                  BlushfulGifts
+                </h1>
+              </div>
             </div>
 
-            <div className="flex-1 flex justify-end items-center gap-4 md:gap-6">
+            <div className="flex justify-end items-center gap-4 md:gap-6">
               <div className="hidden md:flex gap-4 text-white/40">
                 <a href="https://www.instagram.com/blushfulgifts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
                   <Instagram size={18} />
@@ -205,7 +217,7 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
               </div>
               <button 
                 onClick={onOpenCart} 
-                className="relative w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:text-gold transition-all active:scale-95 shadow-lg"
+                className="relative w-10 h-10 flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:text-gold transition-all active:scale-95 shadow-lg flex-shrink-0"
                 aria-label="Open Cart"
               >
                 <ShoppingBag size={20} />
@@ -246,7 +258,10 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
               className="fixed left-0 top-0 h-full w-[80%] max-w-xs bg-dark-surface z-[101] p-8 flex flex-col"
             >
               <div className="flex justify-between items-center mb-12">
-                <span className="text-xl font-decorative tracking-widest text-gold">Blushful</span>
+                <div className="flex items-center gap-3">
+                  <img src={BRAND_LOGO} alt="Logo" className="w-10 h-10 rounded-full border border-gold/30 object-cover" referrerPolicy="no-referrer" />
+                  <span className="text-xl font-decorative tracking-widest text-gold">Blushful</span>
+                </div>
                 <button onClick={() => setIsMenuOpen(false)} className="text-white/40"><X size={24} /></button>
               </div>
               
@@ -976,7 +991,7 @@ export default function App() {
         
         <div className="space-y-24">
           {Array.from(new Set(PRODUCTS.map(p => p.category))).map(category => (
-            <div key={category} id={category.toLowerCase().replace(/\s+/g, '-')} className="scroll-mt-32">
+            <div key={category} id={category.toLowerCase().replace(/\s+/g, '-')} className="scroll-mt-40 md:scroll-mt-56">
               <div className="flex items-center gap-6 mb-12">
                 <h3 className="text-2xl md:text-4xl font-serif text-gold tracking-[0.2em] uppercase whitespace-nowrap">{category}</h3>
                 <div className="h-px bg-gold/20 flex-1" />
@@ -1157,7 +1172,10 @@ export default function App() {
         <div className="absolute bottom-0 left-0 w-full h-1/2 nebula-bg opacity-30" />
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-20 mb-16 md:mb-32 relative z-10">
           <div className="space-y-6 md:space-y-8 text-center md:text-left">
-            <div className="text-2xl md:text-3xl font-decorative tracking-widest text-white text-glow">BlushfulGifts</div>
+            <div className="flex items-center justify-center md:justify-start gap-4">
+              <img src={BRAND_LOGO} alt="Logo" className="w-12 h-12 rounded-full border border-gold/30 object-cover shadow-lg" referrerPolicy="no-referrer" />
+              <div className="text-2xl md:text-3xl font-decorative tracking-widest text-white text-glow">BlushfulGifts</div>
+            </div>
             <p className="text-white/30 text-xs md:text-sm leading-relaxed font-light">
               Preserving your most cherished wedding memories through the art of high-end resin preservation. Handcrafted with magic in every detail.
             </p>
