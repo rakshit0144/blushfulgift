@@ -196,18 +196,18 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
 
   return (
     <>
-      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-white/80 backdrop-blur-xl border-b border-rose-100 py-4' : 'bg-gradient-to-b from-white/40 to-transparent py-4 md:py-8'}`}>
-        <div className="max-w-7xl mx-auto px-6">
+      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-white/80 backdrop-blur-xl border-b border-rose-100 py-2 md:py-4' : 'bg-gradient-to-b from-white/40 to-transparent py-3 md:py-8'}`}>
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
           {/* Top Row: Search, Logo, Icons */}
           <div className="grid grid-cols-[1fr_auto_1fr] items-center mb-0 md:mb-6">
             <div className="flex items-center">
               <div className="md:hidden">
                 <button 
                   onClick={() => setIsMenuOpen(true)}
-                  className="w-11 h-11 flex items-center justify-center bg-rose-100/50 backdrop-blur-md border border-rose-200 rounded-full text-rose-900 hover:text-gold transition-all active:scale-95 shadow-lg touch-manipulation"
+                  className="w-9 h-9 flex items-center justify-center bg-rose-100/50 backdrop-blur-md border border-rose-200 rounded-full text-rose-900 hover:text-gold transition-all active:scale-95 shadow-lg touch-manipulation"
                   aria-label="Open Menu"
                 >
-                  <Menu size={22} />
+                  <Menu size={18} />
                 </button>
               </div>
 
@@ -222,21 +222,21 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
               </div>
             </div>
             
-            <div className="text-center px-4">
+            <div className="text-center px-2 md:px-4">
               <div className="flex items-center justify-center gap-2 md:gap-4">
                 <img 
                   src={BRAND_LOGO} 
                   alt="BlushfulGifts Logo" 
-                  className="w-8 h-8 md:w-14 md:h-14 rounded-full border border-gold/30 shadow-lg object-cover flex-shrink-0" 
+                  className="w-7 h-7 md:w-14 md:h-14 rounded-full border border-gold/30 shadow-lg object-cover flex-shrink-0" 
                   referrerPolicy="no-referrer" 
                 />
-                <h1 className="text-xl sm:text-2xl md:text-5xl font-decorative tracking-wider md:tracking-widest text-rose-800 text-glow whitespace-nowrap">
+                <h1 className="text-lg sm:text-2xl md:text-5xl font-decorative tracking-wider md:tracking-widest text-rose-800 text-glow whitespace-nowrap">
                   BlushfulGifts
                 </h1>
               </div>
             </div>
 
-            <div className="flex justify-end items-center gap-4 md:gap-6">
+            <div className="flex justify-end items-center gap-3 md:gap-6">
               <div className="hidden md:flex gap-4 text-rose-900/40">
                 <a href="https://www.instagram.com/blushfulgifts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
                   <Instagram size={18} />
@@ -247,12 +247,12 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
               </div>
               <button 
                 onClick={onOpenCart} 
-                className="relative w-11 h-11 flex items-center justify-center bg-rose-100/50 backdrop-blur-md border border-rose-200 rounded-full text-rose-900 hover:text-gold transition-all active:scale-95 shadow-lg flex-shrink-0 touch-manipulation"
+                className="relative w-9 h-9 flex items-center justify-center bg-rose-100/50 backdrop-blur-md border border-rose-200 rounded-full text-rose-900 hover:text-gold transition-all active:scale-95 shadow-lg flex-shrink-0 touch-manipulation"
                 aria-label="Open Cart"
               >
-                <ShoppingBag size={22} />
+                <ShoppingBag size={18} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-gold text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-lg">
+                  <span className="absolute -top-1 -right-1 bg-gold text-white text-[8px] md:text-[10px] font-bold w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center shadow-lg">
                     {cartCount}
                   </span>
                 )}
@@ -344,7 +344,7 @@ const ProductCard: React.FC<{
       className="group text-center cursor-pointer"
       onClick={() => onViewDetails(product)}
     >
-      <div className="relative aspect-[3/4] mb-6 overflow-hidden rounded-sm border border-rose-100 group-hover:border-gold/30 transition-all duration-700 shadow-lg">
+      <div className="relative aspect-[3/4] mb-3 md:mb-6 overflow-hidden rounded-sm border border-rose-100 group-hover:border-gold/30 transition-all duration-700 shadow-lg">
         <img 
           src={product.image} 
           alt={product.name} 
@@ -354,9 +354,9 @@ const ProductCard: React.FC<{
         <div className="absolute inset-0 bg-rose-900/0 group-hover:bg-rose-900/20 transition-colors duration-500" />
         
         {/* Customizable Tag Overlay */}
-        <div className="absolute top-4 left-4 z-20">
-          <div className="bg-white/80 backdrop-blur-md border border-gold/50 rounded-full px-3 py-1 shadow-xl">
-            <span className="text-[8px] uppercase tracking-[0.2em] text-gold font-bold">Completely Customizable</span>
+        <div className="absolute top-2 left-2 md:top-4 md:left-4 z-20">
+          <div className="bg-white/80 backdrop-blur-md border border-gold/50 rounded-full px-2 py-0.5 md:px-3 md:py-1 shadow-xl">
+            <span className="text-[7px] md:text-[8px] uppercase tracking-[0.2em] text-gold font-bold">Completely Customizable</span>
           </div>
         </div>
 
@@ -368,14 +368,14 @@ const ProductCard: React.FC<{
         </div>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1 md:space-y-2">
         <div>
           <div className="inline-block mb-1">
             <span className="text-[9px] uppercase tracking-[0.3em] text-gold/60 font-medium">Handcrafted Magic</span>
           </div>
-          <h3 className="text-lg font-serif tracking-wide text-rose-900">{product.name}</h3>
+          <h3 className="text-base md:text-lg font-serif tracking-wide text-rose-900">{product.name}</h3>
         </div>
-        <div className="text-gold font-serif">Starting from ₹{Math.min(...product.options.map(o => o.price)).toLocaleString()}</div>
+        <div className="text-gold font-serif text-sm md:text-base">Starting from ₹{Math.min(...product.options.map(o => o.price)).toLocaleString()}</div>
       </div>
     </motion.div>
   );
@@ -451,7 +451,7 @@ const ProductDetailModal = ({
             </button>
 
             {/* Image Section */}
-            <div className="w-full md:w-1/2 h-[40vh] md:h-auto relative">
+            <div className="w-full md:w-1/2 h-[30vh] md:h-auto relative">
               <img 
                 src={product.image} 
                 alt={product.name} 
@@ -462,22 +462,22 @@ const ProductDetailModal = ({
             </div>
 
             {/* Content Section */}
-            <div className="w-full md:w-1/2 p-5 md:p-10 overflow-y-auto custom-scrollbar flex flex-col">
-              <div className="mb-8">
-                <span className="text-[10px] uppercase tracking-[0.4em] text-gold font-bold mb-2 block">
+            <div className="w-full md:w-1/2 p-4 md:p-10 overflow-y-auto custom-scrollbar flex flex-col">
+              <div className="mb-4 md:mb-8">
+                <span className="text-[10px] uppercase tracking-[0.4em] text-gold font-bold mb-1 md:mb-2 block">
                   {product.category}
                 </span>
-                <h2 className="text-3xl md:text-4xl font-serif text-rose-900 mb-4">{product.name}</h2>
-                <div className="w-12 h-px bg-gold/50 mb-6" />
-                <div className="space-y-4">
+                <h2 className="text-2xl md:text-4xl font-serif text-rose-900 mb-2 md:mb-4">{product.name}</h2>
+                <div className="w-10 md:w-12 h-px bg-gold/50 mb-4 md:mb-6" />
+                <div className="space-y-2 md:space-y-4">
                   <h4 className="text-[10px] uppercase tracking-widest text-gold font-bold">Description</h4>
-                  <p className="text-rose-900/60 leading-relaxed font-light italic">
+                  <p className="text-rose-900/60 text-sm md:text-lg leading-relaxed font-light italic">
                     {product.note || "Preserve your most cherished memories in our premium Eternity-Grade resin. Each piece is handcrafted with magic and care to ensure your love story twinkles forever. ✨"}
                   </p>
                 </div>
 
                 {/* Product Features Grid */}
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mt-8">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3 mt-4 md:mt-8">
                   {[
                     { icon: <Video size={14} />, text: "Making Video sharing" },
                     { icon: <Home size={14} />, text: "Home Pick & Drop Facility" },
@@ -488,25 +488,25 @@ const ProductDetailModal = ({
                   ].map((feature, idx) => (
                     <div 
                       key={idx} 
-                      className="flex items-center gap-2 px-3 py-2 border border-rose-200 bg-white/60 backdrop-blur-sm rounded-md shadow-sm"
+                      className="flex items-center gap-2 px-2 py-1.5 md:px-3 md:py-2 border border-rose-200 bg-white/60 backdrop-blur-sm rounded-md shadow-sm"
                     >
                       <span className="text-rose-500">{feature.icon}</span>
-                      <span className="text-[10px] font-semibold text-rose-900 tracking-tight">{feature.text}</span>
+                      <span className="text-[9px] md:text-[10px] font-semibold text-rose-900 tracking-tight">{feature.text}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="space-y-6 mt-auto">
+              <div className="space-y-4 md:space-y-6 mt-auto">
                 {/* Options Selector */}
-                <div className="space-y-3">
+                <div className="space-y-2 md:space-y-3">
                   <label className="text-[10px] uppercase tracking-widest text-rose-900/40 ml-1">Select Size / Option</label>
-                  <div className="grid grid-cols-1 gap-2">
+                  <div className="grid grid-cols-1 gap-1.5 md:gap-2">
                     {product.options.map((opt) => (
                       <button
                         key={opt.label}
                         onClick={() => setSelectedOption(opt)}
-                        className={`flex justify-between items-center px-6 py-3 rounded-xl border transition-all duration-300 ${selectedOption.label === opt.label ? 'bg-gold/10 border-gold text-rose-900' : 'bg-white/40 border-rose-100 text-rose-900/60 hover:border-rose-300'}`}
+                        className={`flex justify-between items-center px-4 py-2.5 md:px-6 md:py-3 rounded-xl border transition-all duration-300 ${selectedOption.label === opt.label ? 'bg-gold/10 border-gold text-rose-900' : 'bg-white/40 border-rose-100 text-rose-900/60 hover:border-rose-300'}`}
                       >
                         <span className="text-xs uppercase tracking-widest">{opt.label}</span>
                         <span className="text-gold font-serif">₹{opt.price.toLocaleString()}</span>
@@ -516,9 +516,9 @@ const ProductDetailModal = ({
                 </div>
 
                 {/* Reference Photo */}
-                <div className="space-y-3">
+                <div className="space-y-2 md:space-y-3">
                   <label className="text-[10px] uppercase tracking-widest text-rose-900/40 ml-1">Add Reference Photo (Optional)</label>
-                  <label className={`flex items-center justify-center gap-3 w-full border rounded-xl py-4 text-xs uppercase tracking-widest cursor-pointer transition-all duration-300 ${referencePhoto ? 'bg-gold/10 border-gold text-gold' : 'bg-white/40 border-rose-100 text-rose-900/40 hover:border-gold/50'}`}>
+                  <label className={`flex items-center justify-center gap-3 w-full border rounded-xl py-3 md:py-4 text-xs uppercase tracking-widest cursor-pointer transition-all duration-300 ${referencePhoto ? 'bg-gold/10 border-gold text-gold' : 'bg-white/40 border-rose-100 text-rose-900/40 hover:border-gold/50'}`}>
                     <Camera size={18} className={referencePhoto ? 'animate-pulse' : ''} />
                     <span className="truncate max-w-[200px]">
                       {referencePhoto ? referencePhoto.name : 'Upload Image'}
@@ -533,38 +533,38 @@ const ProductDetailModal = ({
                 </div>
 
                 {/* Customization Fields */}
-                <div className="mt-8 p-6 bg-white/60 backdrop-blur-md rounded-xl shadow-xl border border-rose-100">
-                  <div className="text-center mb-6">
-                    <h3 className="text-2xl font-serif text-rose-900 mb-1">Place Customised order</h3>
-                    <p className="text-xs text-rose-900/60 font-medium">Fill Below Details Which will be used during product making</p>
+                <div className="mt-4 md:mt-8 p-4 md:p-6 bg-white/60 backdrop-blur-md rounded-xl shadow-xl border border-rose-100">
+                  <div className="text-center mb-3 md:mb-6">
+                    <h3 className="text-xl md:text-2xl font-serif text-rose-900 mb-1">Place Customised order</h3>
+                    <p className="text-[10px] md:text-xs text-rose-900/60 font-medium">Fill Below Details Which will be used during product making</p>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold text-rose-900/70 ml-1">Event Date (Optional)</label>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+                    <div className="space-y-1 md:space-y-2">
+                      <label className="text-[10px] md:text-xs font-bold text-rose-900/70 ml-1">Event Date (Optional)</label>
                       <input 
                         type="date" 
-                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-all text-rose-900 touch-manipulation"
+                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-3 py-2 md:px-4 md:py-3 text-base md:text-sm focus:border-gold outline-none transition-all text-rose-900 touch-manipulation"
                         value={eventDate}
                         onChange={(e) => setEventDate(e.target.value)}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold text-rose-900/70 ml-1">Bride Name (Optional)</label>
+                    <div className="space-y-1 md:space-y-2">
+                      <label className="text-[10px] md:text-xs font-bold text-rose-900/70 ml-1">Bride Name (Optional)</label>
                       <input 
                         type="text" 
                         placeholder="Bride Name"
-                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-all text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
+                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-3 py-2 md:px-4 md:py-3 text-base md:text-sm focus:border-gold outline-none transition-all text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                         value={brideName}
                         onChange={(e) => setBrideName(e.target.value)}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold text-rose-900/70 ml-1">Groom Name (Optional)</label>
+                    <div className="space-y-1 md:space-y-2">
+                      <label className="text-[10px] md:text-xs font-bold text-rose-900/70 ml-1">Groom Name (Optional)</label>
                       <input 
                         type="text" 
                         placeholder="Groom Name"
-                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-all text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
+                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-3 py-2 md:px-4 md:py-3 text-base md:text-sm focus:border-gold outline-none transition-all text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                         value={groomName}
                         onChange={(e) => setGroomName(e.target.value)}
                       />
@@ -573,13 +573,13 @@ const ProductDetailModal = ({
                 </div>
 
                 {/* Action Buttons */}
-                <div className="grid grid-cols-2 gap-4 pt-4">
+                <div className="grid grid-cols-2 gap-3 md:gap-4 pt-2 md:pt-4">
                   <button 
                     onClick={() => {
                       onAddToCart(item);
                       onClose();
                     }}
-                    className="bg-white/40 border border-gold/30 text-gold py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold hover:text-white transition-all duration-500 touch-manipulation"
+                    className="bg-white/40 border border-gold/30 text-gold py-3 md:py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold hover:text-white transition-all duration-500 touch-manipulation"
                   >
                     Add to Cart
                   </button>
@@ -588,7 +588,7 @@ const ProductDetailModal = ({
                       onBuyNow(item);
                       onClose();
                     }}
-                    className="bg-gold text-white py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold-light transition-all duration-500 touch-manipulation"
+                    className="bg-gold text-white py-3 md:py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold-light transition-all duration-500 touch-manipulation"
                   >
                     Buy Now
                   </button>
@@ -698,26 +698,26 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                 </div>
               </div>
               
-              <div className="p-6 md:p-8">
-                <div className="flex justify-between items-center mb-6">
+              <div className="p-4 md:p-8">
+                <div className="flex justify-between items-center mb-4 md:mb-6">
                   <h2 className="text-xl md:text-2xl font-serif text-rose-900">Shipping Details</h2>
                   <button onClick={onClose} className="text-rose-900/40 hover:text-rose-900"><X size={20} /></button>
                 </div>
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
                   <input 
                     required
                     type="text" 
                     placeholder="Full Name" 
-                    className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
+                    className="w-full bg-white/40 border border-rose-100 rounded-xl px-3 py-2.5 md:px-4 md:py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                   />
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                     <input 
                       required
                       type="email" 
                       placeholder="Email" 
-                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
+                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-3 py-2.5 md:px-4 md:py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
                     />
@@ -725,7 +725,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       required
                       type="tel" 
                       placeholder="Phone" 
-                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
+                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-3 py-2.5 md:px-4 md:py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
                     />
@@ -734,16 +734,16 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                     required
                     placeholder="Full Address" 
                     rows={3}
-                    className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-colors resize-none text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
+                    className="w-full bg-white/40 border border-rose-100 rounded-xl px-3 py-2.5 md:px-4 md:py-3 text-base md:text-sm focus:border-gold outline-none transition-colors resize-none text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                     value={formData.address}
                     onChange={(e) => setFormData({...formData, address: e.target.value})}
                   />
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-3 md:gap-4">
                     <input 
                       required
                       type="text" 
                       placeholder="City" 
-                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
+                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-3 py-2.5 md:px-4 md:py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                       value={formData.city}
                       onChange={(e) => setFormData({...formData, city: e.target.value})}
                     />
@@ -751,7 +751,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       required
                       type="text" 
                       placeholder="Pincode" 
-                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
+                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-3 py-2.5 md:px-4 md:py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                       value={formData.pincode}
                       onChange={(e) => setFormData({...formData, pincode: e.target.value})}
                     />
@@ -772,7 +772,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       />
                       <label 
                         htmlFor="ref-photo"
-                        className="flex items-center gap-3 w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm cursor-pointer hover:border-gold transition-colors"
+                        className="flex items-center gap-3 w-full bg-white/40 border border-rose-100 rounded-xl px-3 py-2.5 md:px-4 md:py-3 text-sm cursor-pointer hover:border-gold transition-colors"
                       >
                         <div className="w-8 h-8 rounded-lg bg-rose-100/50 flex items-center justify-center text-gold">
                           <Camera size={16} />
@@ -798,7 +798,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       <motion.div 
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="mt-2 relative w-20 h-20 rounded-lg overflow-hidden border border-rose-100"
+                        className="mt-2 relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border border-rose-100"
                       >
                         <img 
                           src={React.useMemo(() => formData.referencePhoto ? URL.createObjectURL(formData.referencePhoto) : '', [formData.referencePhoto])} 
@@ -810,7 +810,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                     )}
                   </div>
 
-                  <button type="submit" className="w-full bg-gold text-white py-4 rounded-xl font-bold hover:bg-gold-light transition-all duration-300 uppercase tracking-widest text-sm mt-4">
+                  <button type="submit" className="w-full bg-gold text-white py-3 md:py-4 rounded-xl font-bold hover:bg-gold-light transition-all duration-300 uppercase tracking-widest text-[10px] md:text-sm mt-2 md:mt-4">
                     Confirm Order via WhatsApp
                   </button>
                 </form>
@@ -866,12 +866,12 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onChec
             exit={{ x: '100%' }}
             className="fixed right-0 top-0 h-full w-full max-w-md bg-dark-surface z-[70] shadow-2xl flex flex-col overscroll-contain"
           >
-            <div className="p-6 border-b border-rose-100 flex justify-between items-center">
-              <h2 className="text-xl font-serif text-rose-900">Your Cart</h2>
-              <button onClick={onClose} className="w-11 h-11 flex items-center justify-center text-rose-900/60 hover:text-gold transition-colors touch-manipulation"><X /></button>
+            <div className="p-4 md:p-6 border-b border-rose-100 flex justify-between items-center">
+              <h2 className="text-lg md:text-xl font-serif text-rose-900">Your Cart</h2>
+              <button onClick={onClose} className="w-9 h-9 md:w-11 md:h-11 flex items-center justify-center text-rose-900/60 hover:text-gold transition-colors touch-manipulation"><X size={20} /></button>
             </div>
             
-            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto p-3 md:p-6 space-y-4 md:space-y-6 custom-scrollbar">
               {items.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-rose-900/40 space-y-4">
                   <ShoppingBag size={48} />
@@ -880,49 +880,49 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onChec
                 </div>
               ) : (
                 items.map((item) => (
-                  <div key={item.id} className="flex gap-4">
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden flex-shrink-0 border border-rose-100">
+                  <div key={item.id} className="flex gap-3 md:gap-4">
+                    <div className="w-14 h-14 md:w-20 md:h-20 rounded-lg overflow-hidden flex-shrink-0 border border-rose-100">
                       <img src={item.image} alt={item.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-sm font-medium flex items-center gap-2 text-rose-900">
+                      <h4 className="text-xs md:text-sm font-medium flex items-center gap-2 text-rose-900">
                         {item.name}
-                        {item.referencePhoto && <Camera size={12} className="text-gold animate-pulse" />}
+                        {item.referencePhoto && <Camera size={10} className="text-gold animate-pulse" />}
                       </h4>
-                      <p className="text-[10px] md:text-xs text-rose-900/40 mb-2">
+                      <p className="text-[9px] md:text-xs text-rose-900/40 mb-1 md:mb-2">
                         {item.optionLabel}
-                        {item.referencePhoto && <span className="ml-2 text-gold/60 italic">(Photo attached)</span>}
+                        {item.referencePhoto && <span className="ml-2 text-gold/60 italic">(Photo)</span>}
                       </p>
                       <div className="flex justify-between items-center">
                         <div className="flex items-center border border-rose-200 rounded-md overflow-hidden">
-                          <button onClick={() => onUpdateQuantity(item.id, -1)} className="w-10 h-10 flex items-center justify-center text-rose-900/60 hover:text-gold transition-colors touch-manipulation">-</button>
-                          <span className="px-2 text-sm text-rose-900 min-w-[2rem] text-center">{item.quantity}</span>
-                          <button onClick={() => onUpdateQuantity(item.id, 1)} className="w-10 h-10 flex items-center justify-center text-rose-900/60 hover:text-gold transition-colors touch-manipulation">+</button>
+                          <button onClick={() => onUpdateQuantity(item.id, -1)} className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center text-rose-900/60 hover:text-gold transition-colors touch-manipulation">-</button>
+                          <span className="px-1.5 text-xs text-rose-900 min-w-[1.5rem] text-center">{item.quantity}</span>
+                          <button onClick={() => onUpdateQuantity(item.id, 1)} className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center text-rose-900/60 hover:text-gold transition-colors touch-manipulation">+</button>
                         </div>
                         <div className="text-gold text-sm md:text-base font-serif">₹{(item.price * item.quantity).toLocaleString()}</div>
                       </div>
                     </div>
-                    <button onClick={() => onRemove(item.id)} className="text-rose-900/20 hover:text-red-500 p-1"><X size={16} /></button>
+                    <button onClick={() => onRemove(item.id)} className="text-rose-900/20 hover:text-red-500 p-1"><X size={14} /></button>
                   </div>
                 ))
               )}
             </div>
 
             {items.length > 0 && (
-              <div className="p-6 border-t border-rose-100 space-y-4">
-                <div className="flex justify-between text-lg font-serif text-rose-900">
+              <div className="p-4 md:p-6 border-t border-rose-100 space-y-3 md:space-y-4">
+                <div className="flex justify-between text-base md:text-lg font-serif text-rose-900">
                   <span>Total</span>
                   <span className="text-gold">₹{total.toLocaleString()}</span>
                 </div>
                 <button 
                   onClick={onCheckout}
-                  className="w-full bg-gold text-white py-4 rounded-xl font-bold hover:bg-gold-light transition-colors uppercase tracking-widest block"
+                  className="w-full bg-gold text-white py-3 md:py-4 rounded-xl font-bold hover:bg-gold-light transition-colors uppercase tracking-widest block text-[10px] md:text-sm"
                 >
                   Secure Checkout
                 </button>
                 <div className="flex justify-center gap-4 opacity-40 grayscale">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Razorpay_logo.svg" alt="Razorpay" className="h-4" />
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo.png" alt="UPI" className="h-4" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Razorpay_logo.svg" alt="Razorpay" className="h-3 md:h-4" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo.png" alt="UPI" className="h-3 md:h-4" />
                 </div>
               </div>
             )}
@@ -1021,18 +1021,18 @@ export default function App() {
       <Navbar cartCount={cartItems.reduce((s, i) => s + i.quantity, 0)} onOpenCart={() => setIsCartOpen(true)} />
 
       {/* Latest Arrivals Section */}
-      <section id="shop" className="pt-32 md:pt-48 pb-16 md:pb-32 px-6 max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-12 md:mb-24">
-          <h2 className="text-3xl md:text-6xl mb-4 md:mb-6 font-decorative tracking-wide text-glow text-rose-900">Our Collections</h2>
-          <div className="w-16 md:w-24 h-px bg-gold/30 mx-auto glow-gold mb-12" />
+      <section id="shop" className="pt-24 md:pt-48 pb-12 md:pb-32 px-4 md:px-6 max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-8 md:mb-24">
+          <h2 className="text-2xl md:text-6xl mb-3 md:mb-6 font-decorative tracking-wide text-glow text-rose-900">Our Collections</h2>
+          <div className="w-12 md:w-24 h-px bg-gold/30 mx-auto glow-gold mb-8 md:mb-12" />
           
           {/* Category Navigation Bar */}
-          <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-16">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-8 mb-8 md:mb-16">
             {Array.from(new Set(PRODUCTS.map(p => p.category))).map(category => (
               <a 
                 key={category} 
                 href={`#${category.toLowerCase().replace(/\s+/g, '-')}`}
-                className="px-6 py-2 rounded-full border border-rose-200 bg-white/40 text-[10px] uppercase tracking-widest font-bold text-rose-900 hover:border-gold hover:text-gold transition-all duration-300 shadow-sm touch-manipulation"
+                className="px-4 py-1.5 md:px-6 md:py-2 rounded-full border border-rose-200 bg-white/40 text-[9px] md:text-[10px] uppercase tracking-widest font-bold text-rose-900 hover:border-gold hover:text-gold transition-all duration-300 shadow-sm touch-manipulation"
               >
                 {category}
               </a>
@@ -1040,14 +1040,14 @@ export default function App() {
           </div>
         </div>
         
-        <div className="space-y-24">
+        <div className="space-y-16 md:space-y-24">
           {Array.from(new Set(PRODUCTS.map(p => p.category))).map(category => (
-            <div key={category} id={category.toLowerCase().replace(/\s+/g, '-')} className="scroll-mt-40 md:scroll-mt-56">
-              <div className="flex items-center gap-6 mb-12">
-                <h3 className="text-2xl md:text-4xl font-serif text-gold tracking-[0.2em] uppercase whitespace-nowrap">{category}</h3>
+            <div key={category} id={category.toLowerCase().replace(/\s+/g, '-')} className="scroll-mt-32 md:scroll-mt-56">
+              <div className="flex items-center gap-4 md:gap-6 mb-8 md:mb-12">
+                <h3 className="text-xl md:text-4xl font-serif text-gold tracking-[0.2em] uppercase whitespace-nowrap">{category}</h3>
                 <div className="h-px bg-gold/20 flex-1" />
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12">
                 {PRODUCTS.filter(p => p.category === category).map((product) => (
                   <ProductCard 
                     key={product.id} 
@@ -1062,16 +1062,16 @@ export default function App() {
       </section>
 
       {/* Welcome Section (Split Layout) */}
-      <section id="about" className="py-16 md:py-32 relative overflow-hidden z-10">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 md:gap-24 items-center">
+      <section id="about" className="py-12 md:py-32 relative overflow-hidden z-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-10 md:gap-24 items-center">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="space-y-6 md:space-y-10 text-center md:text-left"
           >
-            <h2 className="text-3xl md:text-6xl leading-tight font-decorative text-rose-900">Welcome to the <br/><span className="text-rose-800">BlushfulGifts</span></h2>
-            <p className="text-rose-900/60 text-base md:text-lg font-light leading-relaxed max-w-lg mx-auto md:mx-0">
+            <h2 className="text-2xl md:text-6xl leading-tight font-decorative text-rose-900">Welcome to the <br/><span className="text-rose-800">BlushfulGifts</span></h2>
+            <p className="text-rose-900/60 text-sm md:text-lg font-light leading-relaxed max-w-lg mx-auto md:mx-0">
               Step into a world of enchantment and magic, where your most <span className="text-gold">Treasured</span> memories are kept <span className="text-gold">Snug</span> and safe. At BlushfulGifts, we create <span className="text-gold">Heartfelt</span> treasures with <span className="text-gold">Express</span> speed, ensuring your love story <span className="text-gold">Twinkles</span> <span className="text-gold">Forever</span>. ✨
             </p>
             <a href="#why-us" className="inline-block">
@@ -1104,12 +1104,12 @@ export default function App() {
       </section>
 
       {/* Browse by Collections */}
-      <section className="py-16 md:py-32 px-6 max-w-7xl mx-auto border-t border-rose-100 relative z-10">
-        <div className="text-center mb-12 md:mb-24">
-          <h2 className="text-3xl md:text-6xl font-decorative text-rose-900">Browse by Collections</h2>
+      <section className="py-12 md:py-32 px-4 md:px-6 max-w-7xl mx-auto border-t border-rose-100 relative z-10">
+        <div className="text-center mb-8 md:mb-24">
+          <h2 className="text-2xl md:text-6xl font-decorative text-rose-900">Browse by Collections</h2>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
           {['Varmala Preservations', 'Flower Clocks', 'LED Blocks'].map((cat, i) => (
             <motion.a 
               href="#shop"
@@ -1128,7 +1128,7 @@ export default function App() {
               />
               <div className="absolute inset-0 bg-rose-900/20 group-hover:bg-rose-900/10 transition-colors" />
               <div className="absolute inset-0 flex items-center justify-center">
-                <h3 className="text-2xl tracking-widest uppercase font-decorative text-white text-glow group-hover:scale-110 transition-transform">{cat}</h3>
+                <h3 className="text-xl md:text-2xl tracking-widest uppercase font-decorative text-white text-glow group-hover:scale-110 transition-transform">{cat}</h3>
               </div>
             </motion.a>
           ))}
@@ -1136,10 +1136,10 @@ export default function App() {
       </section>
 
       {/* Why Choose Us */}
-      <section id="why-us" className="py-16 md:py-32 relative overflow-hidden z-10">
+      <section id="why-us" className="py-12 md:py-32 relative overflow-hidden z-10">
         <div className="absolute inset-0 nebula-bg opacity-40" />
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-12">
             {[
               { icon: <Droplets className="text-gold" />, title: "Eternity-Grade Resin" },
               { icon: <Clock className="text-gold" />, title: "Express Magic Speed" },
