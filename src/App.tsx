@@ -149,9 +149,20 @@ const PRODUCTS: Product[] = [
 // --- Components ---
 
 const Sparkles = () => {
+  const [particleCount, setParticleCount] = useState(20);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setParticleCount(window.innerWidth < 768 ? 12 : 20);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div className="absolute inset-0 pointer-events-none z-0">
-      {[...Array(20)].map((_, i) => (
+    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+      {[...Array(particleCount)].map((_, i) => (
         <div 
           key={i}
           className="sparkle-particle"
@@ -193,10 +204,10 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
               <div className="md:hidden">
                 <button 
                   onClick={() => setIsMenuOpen(true)}
-                  className="w-10 h-10 flex items-center justify-center bg-rose-100/50 backdrop-blur-md border border-rose-200 rounded-full text-rose-900 hover:text-gold transition-all active:scale-95 shadow-lg"
+                  className="w-11 h-11 flex items-center justify-center bg-rose-100/50 backdrop-blur-md border border-rose-200 rounded-full text-rose-900 hover:text-gold transition-all active:scale-95 shadow-lg touch-manipulation"
                   aria-label="Open Menu"
                 >
-                  <Menu size={20} />
+                  <Menu size={22} />
                 </button>
               </div>
 
@@ -236,12 +247,12 @@ const Navbar = ({ cartCount, onOpenCart }: { cartCount: number, onOpenCart: () =
               </div>
               <button 
                 onClick={onOpenCart} 
-                className="relative w-10 h-10 flex items-center justify-center bg-rose-100/50 backdrop-blur-md border border-rose-200 rounded-full text-rose-900 hover:text-gold transition-all active:scale-95 shadow-lg flex-shrink-0"
+                className="relative w-11 h-11 flex items-center justify-center bg-rose-100/50 backdrop-blur-md border border-rose-200 rounded-full text-rose-900 hover:text-gold transition-all active:scale-95 shadow-lg flex-shrink-0 touch-manipulation"
                 aria-label="Open Cart"
               >
-                <ShoppingBag size={20} />
+                <ShoppingBag size={22} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-gold text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-lg">
+                  <span className="absolute -top-1 -right-1 bg-gold text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-lg">
                     {cartCount}
                   </span>
                 )}
@@ -430,17 +441,17 @@ const ProductDetailModal = ({
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative bg-dark-surface border border-rose-200/50 w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
+            className="relative bg-dark-surface border border-rose-200/50 w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[95vh] overscroll-contain"
           >
             <button 
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 p-2 bg-rose-900/10 backdrop-blur-md rounded-full text-rose-900/60 hover:text-rose-900 transition-colors"
+              className="absolute top-4 right-4 z-10 w-11 h-11 flex items-center justify-center bg-rose-900/10 backdrop-blur-md rounded-full text-rose-900/60 hover:text-rose-900 transition-colors touch-manipulation"
             >
-              <X size={20} />
+              <X size={24} />
             </button>
 
             {/* Image Section */}
-            <div className="w-full md:w-1/2 h-[300px] md:h-auto relative">
+            <div className="w-full md:w-1/2 h-[40vh] md:h-auto relative">
               <img 
                 src={product.image} 
                 alt={product.name} 
@@ -451,7 +462,7 @@ const ProductDetailModal = ({
             </div>
 
             {/* Content Section */}
-            <div className="w-full md:w-1/2 p-6 md:p-10 overflow-y-auto custom-scrollbar flex flex-col">
+            <div className="w-full md:w-1/2 p-5 md:p-10 overflow-y-auto custom-scrollbar flex flex-col">
               <div className="mb-8">
                 <span className="text-[10px] uppercase tracking-[0.4em] text-gold font-bold mb-2 block">
                   {product.category}
@@ -533,7 +544,7 @@ const ProductDetailModal = ({
                       <label className="text-xs font-bold text-rose-900/70 ml-1">Event Date (Optional)</label>
                       <input 
                         type="date" 
-                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-4 py-3 text-sm focus:border-gold outline-none transition-all text-rose-900"
+                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-all text-rose-900 touch-manipulation"
                         value={eventDate}
                         onChange={(e) => setEventDate(e.target.value)}
                       />
@@ -543,7 +554,7 @@ const ProductDetailModal = ({
                       <input 
                         type="text" 
                         placeholder="Bride Name"
-                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-4 py-3 text-sm focus:border-gold outline-none transition-all text-rose-900 placeholder:text-rose-900/30"
+                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-all text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                         value={brideName}
                         onChange={(e) => setBrideName(e.target.value)}
                       />
@@ -553,7 +564,7 @@ const ProductDetailModal = ({
                       <input 
                         type="text" 
                         placeholder="Groom Name"
-                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-4 py-3 text-sm focus:border-gold outline-none transition-all text-rose-900 placeholder:text-rose-900/30"
+                        className="w-full bg-rose-50/50 border border-rose-100 rounded-lg px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-all text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                         value={groomName}
                         onChange={(e) => setGroomName(e.target.value)}
                       />
@@ -568,7 +579,7 @@ const ProductDetailModal = ({
                       onAddToCart(item);
                       onClose();
                     }}
-                    className="bg-white/40 border border-gold/30 text-gold py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold hover:text-white transition-all duration-500"
+                    className="bg-white/40 border border-gold/30 text-gold py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold hover:text-white transition-all duration-500 touch-manipulation"
                   >
                     Add to Cart
                   </button>
@@ -577,7 +588,7 @@ const ProductDetailModal = ({
                       onBuyNow(item);
                       onClose();
                     }}
-                    className="bg-gold text-white py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold-light transition-all duration-500"
+                    className="bg-gold text-white py-4 rounded-xl text-[10px] uppercase tracking-widest font-bold hover:bg-gold-light transition-all duration-500 touch-manipulation"
                   >
                     Buy Now
                   </button>
@@ -658,10 +669,10 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="relative bg-dark-surface border border-rose-200/50 w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl"
+          className="relative bg-dark-surface border border-rose-200/50 w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl overscroll-contain"
         >
           {step === 'details' ? (
-            <div className="grid md:grid-cols-2 max-h-[90vh] overflow-y-auto md:max-h-none">
+            <div className="grid md:grid-cols-2 max-h-[95vh] overflow-y-auto md:max-h-none">
               <div className="p-6 md:p-8 border-b md:border-b-0 md:border-r border-rose-100 bg-white/20">
                 <h2 className="text-xl md:text-2xl font-serif mb-6 text-gold">
                   Order Summary
@@ -697,7 +708,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                     required
                     type="text" 
                     placeholder="Full Name" 
-                    className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30"
+                    className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                   />
@@ -706,7 +717,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       required
                       type="email" 
                       placeholder="Email" 
-                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30"
+                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
                     />
@@ -714,7 +725,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       required
                       type="tel" 
                       placeholder="Phone" 
-                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30"
+                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
                     />
@@ -723,7 +734,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                     required
                     placeholder="Full Address" 
                     rows={3}
-                    className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors resize-none text-rose-900 placeholder:text-rose-900/30"
+                    className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-colors resize-none text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                     value={formData.address}
                     onChange={(e) => setFormData({...formData, address: e.target.value})}
                   />
@@ -732,7 +743,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       required
                       type="text" 
                       placeholder="City" 
-                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30"
+                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                       value={formData.city}
                       onChange={(e) => setFormData({...formData, city: e.target.value})}
                     />
@@ -740,7 +751,7 @@ const CheckoutModal = ({ isOpen, onClose, items, total }: {
                       required
                       type="text" 
                       placeholder="Pincode" 
-                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30"
+                      className="w-full bg-white/40 border border-rose-100 rounded-xl px-4 py-3 text-base md:text-sm focus:border-gold outline-none transition-colors text-rose-900 placeholder:text-rose-900/30 touch-manipulation"
                       value={formData.pincode}
                       onChange={(e) => setFormData({...formData, pincode: e.target.value})}
                     />
@@ -853,14 +864,14 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onChec
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            className="fixed right-0 top-0 h-full w-full max-w-md bg-dark-surface z-[70] shadow-2xl flex flex-col"
+            className="fixed right-0 top-0 h-full w-full max-w-md bg-dark-surface z-[70] shadow-2xl flex flex-col overscroll-contain"
           >
             <div className="p-6 border-b border-rose-100 flex justify-between items-center">
               <h2 className="text-xl font-serif text-rose-900">Your Cart</h2>
-              <button onClick={onClose} className="text-rose-900/60 hover:text-gold transition-colors"><X /></button>
+              <button onClick={onClose} className="w-11 h-11 flex items-center justify-center text-rose-900/60 hover:text-gold transition-colors touch-manipulation"><X /></button>
             </div>
             
-            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 custom-scrollbar">
               {items.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-rose-900/40 space-y-4">
                   <ShoppingBag size={48} />
@@ -883,10 +894,10 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemove, onChec
                         {item.referencePhoto && <span className="ml-2 text-gold/60 italic">(Photo attached)</span>}
                       </p>
                       <div className="flex justify-between items-center">
-                        <div className="flex items-center border border-rose-200 rounded-md">
-                          <button onClick={() => onUpdateQuantity(item.id, -1)} className="px-3 py-1.5 text-rose-900/60 hover:text-gold">-</button>
-                          <span className="px-2 text-sm text-rose-900">{item.quantity}</span>
-                          <button onClick={() => onUpdateQuantity(item.id, 1)} className="px-3 py-1.5 text-rose-900/60 hover:text-gold">+</button>
+                        <div className="flex items-center border border-rose-200 rounded-md overflow-hidden">
+                          <button onClick={() => onUpdateQuantity(item.id, -1)} className="w-10 h-10 flex items-center justify-center text-rose-900/60 hover:text-gold transition-colors touch-manipulation">-</button>
+                          <span className="px-2 text-sm text-rose-900 min-w-[2rem] text-center">{item.quantity}</span>
+                          <button onClick={() => onUpdateQuantity(item.id, 1)} className="w-10 h-10 flex items-center justify-center text-rose-900/60 hover:text-gold transition-colors touch-manipulation">+</button>
                         </div>
                         <div className="text-gold text-sm md:text-base font-serif">₹{(item.price * item.quantity).toLocaleString()}</div>
                       </div>
@@ -991,6 +1002,22 @@ export default function App() {
       </div>
 
 
+      {/* Back to Top */}
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="fixed bottom-8 right-8 z-40 w-12 h-12 bg-gold text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-gold-light transition-all active:scale-90 touch-manipulation"
+            aria-label="Back to Top"
+          >
+            <ChevronUp size={24} />
+          </motion.button>
+        )}
+      </AnimatePresence>
+
       <Navbar cartCount={cartItems.reduce((s, i) => s + i.quantity, 0)} onOpenCart={() => setIsCartOpen(true)} />
 
       {/* Latest Arrivals Section */}
@@ -1005,7 +1032,7 @@ export default function App() {
               <a 
                 key={category} 
                 href={`#${category.toLowerCase().replace(/\s+/g, '-')}`}
-                className="px-6 py-2 rounded-full border border-rose-200 bg-white/40 text-[10px] uppercase tracking-widest font-bold text-rose-900 hover:border-gold hover:text-gold transition-all duration-300 shadow-sm"
+                className="px-6 py-2 rounded-full border border-rose-200 bg-white/40 text-[10px] uppercase tracking-widest font-bold text-rose-900 hover:border-gold hover:text-gold transition-all duration-300 shadow-sm touch-manipulation"
               >
                 {category}
               </a>

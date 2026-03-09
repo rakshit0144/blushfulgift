@@ -70,6 +70,38 @@
   .custom-scrollbar::-webkit-scrollbar-thumb {
     @apply bg-gold/20 rounded-full;
   }
+
+  .bokeh {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.5;
+    pointer-events: none;
+    animation: float 12s infinite ease-in-out;
+    will-change: transform, opacity;
+  }
+
+  .sparkle-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px white, 0 0 20px #FFD1DC;
+    animation: sparkle 3s infinite ease-in-out;
+    will-change: transform, opacity;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .bokeh {
+      filter: blur(30px);
+      opacity: 0.3;
+    }
+    .text-glow {
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    }
+  }
 }
 
 @keyframes float {
@@ -80,23 +112,4 @@
 @keyframes sparkle {
   0%, 100% { opacity: 0.3; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.2); }
-}
-
-.bokeh {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(50px);
-  opacity: 0.5;
-  pointer-events: none;
-  animation: float 12s infinite ease-in-out;
-}
-
-.sparkle-particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 0 10px white, 0 0 20px #FFD1DC;
-  animation: sparkle 3s infinite ease-in-out;
 }
